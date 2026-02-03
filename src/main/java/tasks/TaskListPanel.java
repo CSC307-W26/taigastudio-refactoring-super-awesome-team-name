@@ -18,7 +18,7 @@ import java.util.Collection;
 public class TaskListPanel extends JPanel {
 	
 	public TaskListPanel(EditTaskTest main, EditTaskNanny nanny, Blackboard blackboard) {
-		Collection<Task> taskCollection = List.of(blackboard.getAllTasks());
+		Collection<Task> taskCollection = blackboard.getAllTasks();
 		List<Task> tasks = new ArrayList<>(taskCollection);
 		
 		

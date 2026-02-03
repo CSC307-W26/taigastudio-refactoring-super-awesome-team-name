@@ -17,7 +17,7 @@ public class BurndownChartTest extends JFrame {
 	
 	public static void main(String[] a) {
 		BurndownChartTest app = new BurndownChartTest();
-		Blackboard blackboard = new Blackboard();
+		Blackboard blackboard = Blackboard.getInstance();
 		blackboard.addTask(new Task("task1", "blank", "blank"));
 		blackboard.addTask(new Task("task2", "blank", "blank"));
 		blackboard.addTask(new Task("task3", "blank", "blank"));
@@ -30,7 +30,7 @@ public class BurndownChartTest extends JFrame {
 		Sprint s = new Sprint(new Date(MILLIS_PER_DAY * 14));
 		s.setBeginning(new Date(0));
 		blackboard.setActiveSprint(s);
-		BurndownChart bdc = new BurndownChart(blackboard);
+		BurndownChart bdc = new BurndownChart();
 		app.setTitle("Taiga");
 		app.setSize(1470, 600);
 		app.add(bdc);

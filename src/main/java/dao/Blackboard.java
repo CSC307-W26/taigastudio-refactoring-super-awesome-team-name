@@ -1,51 +1,106 @@
 package dao;
-
-import project.ListProjectPanel;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * This class is storing the stories (treating it sort of like the backlog)
+ * Central shared data model for the TaigaStudio application.
+ * FEEL FREE TO MODIFY AS YOU NEED
  *
- * @author Jonathan Garcia
- * @version 1.0
+ * @version 2026.02.03
+ * @author Isaac-Pruett
  */
-
 public class Blackboard {
-	
+	private static Blackboard blackboard;
+	private final Map<String, Project> projects;
+	private final Map<String, UserStory> userStories;
+	private final Map<String, Task> tasks;
+	private Sprint activeSprint;
+
+
 	private static LinkedList<String> stories = new LinkedList<>();
-	
+
+	public String curEditTaskID = "0";
+
+	public Blackboard() {
+		this.projects = new ConcurrentHashMap<>();
+		this.userStories = new ConcurrentHashMap<>();
+		this.tasks = new ConcurrentHashMap<>();
+	}
+
+	public void deleteProject(Project project) {
+		projects.remove(project.getTitle());
+	}
+
+	public void addProject(Project project) {
+		projects.put(project.getTitle(), project);
+	}
+
+	public Project getProject(String projectId) {
+		return projects.get(projectId);
+	}
+
+	public Collection<Project> getAllProjects() {
+		return projects.values();
+	}
+
+	public void addUserStory(UserStory story) {
+		userStories.put(story.getId(), story);
+	}
+
+	public UserStory getUserStory(String storyId) {
+		return userStories.get(storyId);
+	}
+
+	public Collection<UserStory> getAllUserStories() {
+		return userStories.values();
+	}
+
+	public void addTask(Task task) {
+		tasks.put(task.getId(), task);
+	}
+
+	public Task getTask(String taskId) {
+		return tasks.get(taskId);
+	}
+
+	public Collection<Task> getAllTasks() {
+		return tasks.values();
+	}
+
+	public synchronized void setActiveSprint(Sprint sprint) {
+		this.activeSprint = sprint;
+	}
+
+	public Sprint getActiveSprint() {
+		return activeSprint;
+	}
+
+	public int getProjectCount() {
+		return projects.size();
+	}
+
+	public int getStoryCount() {
+		return userStories.size();
+	}
+
+	public int getTaskCount() {
+		return tasks.size();
+	}
+
+	public static Blackboard getInstance(){
+		if(blackboard == null){
+			blackboard = new Blackboard();
+		}
+		return blackboard;
+	}
+
+
+
 	public static void addStory(String story) {
 		stories.add(story);
 	}
-	
+
 	public static LinkedList<String> getStories() {
 		return stories;
 	}
-	
-	public static ListProjectPanel getInstance() {
-		return null;
-	}
-	
-	public void addTask(Task task) {
-	}
-	
-	public Task getTask(String id) {
-		return null;
-	}
-	
-	public String getTaskCount() {
-		return "";
-	}
-	
-	public Task[] getAllTasks() {
-		return new Task[0];
-	}
-	
-	public Sprint getActiveSprint() {
-		return null;
-	}
-	
-	public void setActiveSprint(Sprint s) {
-	}
-	
 }
