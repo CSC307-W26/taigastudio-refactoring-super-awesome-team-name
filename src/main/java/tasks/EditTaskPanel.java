@@ -1,12 +1,10 @@
 package tasks;
 
-import dao.Blackboard;
-import dao.Task;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,6 +12,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import dao.Task;
 
 /**
  * Panel for editing an existing task with input fields for subject and body.
@@ -23,7 +23,7 @@ import javax.swing.border.LineBorder;
  */
 public class EditTaskPanel extends JPanel {
 	
-	public EditTaskPanel(Task task, EditTaskNanny nanny, Blackboard blackboard) {
+	public EditTaskPanel(Task task, EditTaskNanny nanny) {
 		String subjectText = task.getSubject();
 		String bodyText = task.getBody();
 		setBackground(Color.WHITE);

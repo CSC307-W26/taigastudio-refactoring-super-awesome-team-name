@@ -1,13 +1,18 @@
 package tasks;
 
-import dao.Blackboard;
-import dao.Task;
-
-import java.awt.*;
-import javax.swing.*;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import dao.Blackboard;
+import dao.Task;
 
 /**
  * Panel that displays a list of tasks with edit buttons.
@@ -17,7 +22,8 @@ import java.util.Collection;
  */
 public class TaskListPanel extends JPanel {
 	
-	public TaskListPanel(EditTaskTest main, EditTaskNanny nanny, Blackboard blackboard) {
+	public TaskListPanel(JFrame main, EditTaskNanny nanny) {
+		Blackboard blackboard = Blackboard.getInstance();
 		Collection<Task> taskCollection = blackboard.getAllTasks();
 		List<Task> tasks = new ArrayList<>(taskCollection);
 		

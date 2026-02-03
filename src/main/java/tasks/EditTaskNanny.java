@@ -1,9 +1,11 @@
 package tasks;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+
 import dao.Blackboard;
 import dao.Task;
-
-import java.awt.event.ActionEvent;
 
 /**
  * This class is the nanny for tasks.EditTaskTest
@@ -13,17 +15,16 @@ import java.awt.event.ActionEvent;
  */
 public class EditTaskNanny {
  
-	private final EditTaskTest main;
-	private final Blackboard blackboard;
+	private final JFrame main;
 	
-	public EditTaskNanny(EditTaskTest main, Blackboard blackboard) {
+	public EditTaskNanny(JFrame main) {
 		this.main = main;
-		this.blackboard = blackboard;
 	}
 	
 	public void SaveButton(Task newTask) {
+		Blackboard blackboard = Blackboard.getInstance();
 		blackboard.addTask(newTask);
-		main.setContentPane(new TaskListPanel(main, this, blackboard));
+		main.setContentPane(new TaskListPanel(main, this));
 		main.revalidate();
 		main.repaint();
 	}
@@ -31,7 +32,10 @@ public class EditTaskNanny {
 	
 	public void EditButton(ActionEvent e) {
 		String id = e.getActionCommand();
-		main.showEdit(id);
+		Blackboard blackboard = Blackboard.getInstance();
+		main.setContentPane(new EditTaskPanel(blackboard.getTask(id), this));
+		main.revalidate();
+		main.repaint();
 	}
 	
 	
