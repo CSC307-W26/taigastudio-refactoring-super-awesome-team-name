@@ -2,10 +2,8 @@
 
 ```mermaid
 classDiagram
-direction LR
 
 class JPanel {
-  <<Swing>>
 }
 
 class BurndownChart {
