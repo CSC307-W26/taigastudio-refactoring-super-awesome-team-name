@@ -9,6 +9,13 @@
 }}}%%
 classDiagram
 
+class "JPanel  " as JPanel
+class "BurndownChart  " as BurndownChart
+class "Blackboard  " as Blackboard
+class "Sprint  " as Sprint
+class "Task  " as Task
+class "Graphics  " as Graphics
+
 class JPanel {
 }
 
