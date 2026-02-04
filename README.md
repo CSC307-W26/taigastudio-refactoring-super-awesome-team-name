@@ -8,9 +8,8 @@
     'rankSpacing': 80
 }}}%%
 classDiagram
-direction TB
 
-class "JPanel" {
+class JPanel {
 }
 
 class BurndownChart {
