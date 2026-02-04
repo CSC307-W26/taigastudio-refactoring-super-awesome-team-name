@@ -12,7 +12,6 @@
 }}}%%
 
 classDiagram
-direction TB
 
 class BurndownChart 
 class JPanel
@@ -24,4 +23,5 @@ JPanel <|-- BurndownChart
 BurndownChart --> Blackboard
 BurndownChart --> Sprint
 BurndownChart ..> Task
+
 ```
