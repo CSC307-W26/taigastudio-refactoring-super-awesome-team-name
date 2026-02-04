@@ -2,45 +2,45 @@
 
 ```mermaid
 %%{init: {'themeVariables': {
-    'fontSize': '14px',
-    'nodeSpacing': 80,
-    'rankSpacing': 80
+  'fontSize': '14px',
+  'nodeSpacing': 80,
+  'rankSpacing': 80
 }}}%%
 classDiagram
 direction TB
 
 class JPanel {
-    placeholderPaddingToAvoidCutting
+  +JPanel()
 }
 
 class BurndownChart {
-    -Sprint currentSprint
-    -Blackboard blackboard
-    -int maxPoints
-    -int sprintLengthDays
-    -int leftPadding
-    -int rightPadding
-    -int topPadding
-    -int bottomPadding
-    -static int POINT_SIZE
-    -static long MILLIS_PER_DAY
+  -Sprint currentSprint
+  -Blackboard blackboard
+  -int maxPoints
+  -int sprintLengthDays
+  -int leftPadding
+  -int rightPadding
+  -int topPadding
+  -int bottomPadding
+  -static int POINT_SIZE
+  -static long MILLIS_PER_DAY
 
-    +BurndownChart(Blackboard blackboard)
-    +paintComponent(Graphics g)
+  +BurndownChart(Blackboard blackboard)
+  +paintComponent(Graphics g)
 }
 
 class Blackboard {
-    +getActiveSprint() Sprint
-    +getAllTasks() List~Task~
+  +getActiveSprint() Sprint
+  +getAllTasks() List~Task~
 }
 
 class Sprint {
-    +getBeginning() Date
-    +getExpiration() Date
+  +getBeginning() Date
+  +getExpiration() Date
 }
 
 class Task {
-    +getCompletionDate() Date
+  +getCompletionDate() Date
 }
 
 JPanel <|-- BurndownChart
