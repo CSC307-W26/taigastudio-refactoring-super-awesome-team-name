@@ -13,6 +13,12 @@
 classDiagram
 direction TB
 
+class BurndownChart
+class JPanel
+class Blackboard
+class Sprint
+class Task
+
 %% ---- Style definitions ----
 classDef ui fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px
 classDef dao fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
