@@ -15,7 +15,8 @@ classDiagram
 direction TB
 
 class BurndownChart
-class JPanel
+class JPanel {
+}
 class Blackboard
 class Sprint
 class Task
