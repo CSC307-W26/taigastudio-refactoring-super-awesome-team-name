@@ -2,7 +2,7 @@
 
 > [!NOTE]
 >
-> Experimenting with a class diagram created in Mermaid.
+> Experimenting with class diagram defined using Mermaid.
 
 ```mermaid
 %%{init: {'themeVariables': {
@@ -12,8 +12,9 @@
 }}}%%
 
 classDiagram
+direction TB
 
-class BurndownChart 
+class BurndownChart
 class JPanel
 class Blackboard
 class Sprint
@@ -23,5 +24,4 @@ JPanel <|-- BurndownChart
 BurndownChart --> Blackboard
 BurndownChart --> Sprint
 BurndownChart ..> Task
-
 ```
