@@ -16,10 +16,8 @@ import java.util.Collection;
 public class ListProjectHomePanel extends JPanel {
 	
 	private Collection<Project> projects;
-	private JFrame main;
-	
+
 	public ListProjectHomePanel(JFrame main) {
-		this.main = main;
 		this.projects = Blackboard.getInstance().getAllProjects();
 		
 		this.setLayout(new BorderLayout());
@@ -33,8 +31,8 @@ public class ListProjectHomePanel extends JPanel {
 		add(scrollPane);
 		Panel topPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
 		JButton newProjectButton = new JButton();
-		newProjectButton.setText("New dao.Project");
-		newProjectButton.addActionListener(e -> NewProjectPanelNanny.newProject());
+		newProjectButton.setText("New Project");
+		newProjectButton.addActionListener(e -> EditProjectPanelNanny.editScreen(new Project("","","")));
 		topPanel.add(newProjectButton);
 		add(topPanel, BorderLayout.NORTH);
 	}
