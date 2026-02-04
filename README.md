@@ -10,7 +10,7 @@
 classDiagram
 direction TB
 
-class JPanel {
+class "JPanel" {
 }
 
 class BurndownChart {
