@@ -9,7 +9,9 @@
 classDiagram
 direction TB
 
-class JPanel
+class JPanel {
+    placeholderPaddingToAvoidCutting
+}
 
 class BurndownChart {
     -Sprint currentSprint
