@@ -13,8 +13,9 @@
 classDiagram
 direction TB
 
+classDef ui fill:#D6EAF8,color:#0B3C5D,stroke:#1B4F72,stroke-width:2px
 class BurndownChart {
-}
+} ui
 
 class JPanel
 class Blackboard
