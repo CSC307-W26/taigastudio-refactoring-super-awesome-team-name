@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * This class represents the panel for editing a project
  *
- * @author Owen Sam
+ * @author Owen Sam and Owen Ledrick
  * @version 1.0
  *
  */

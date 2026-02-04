@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * dao.Project Panel Nanny
  *
- * @author Owen Sam
+ * @author Owen Sam and Owen Ledrick
  * @version 1.0
  *
  */
