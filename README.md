@@ -20,16 +20,16 @@ class Sprint
 class Task
 
 %% ---- Style definitions ----
-classDef ui fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px
-classDef dao fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
-classDef swing fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px
+classDef ui fill:#D6EAF8,color:#0B3C5D,stroke:#1B4F72,stroke-width:2px
+classDef dao fill:#D5F5E3,color:#145A32,stroke:#1E8449,stroke-width:2px
+classDef swing fill:#FDEBD0,color:#7E5109,stroke:#CA6F1E,stroke-width:2px
 
 %% ---- Apply styles ----
 class BurndownChart ui
-class JPanel swing
 class Blackboard dao
 class Sprint dao
 class Task dao
+class JPanel swing
 
 JPanel <|-- BurndownChart
 BurndownChart --> Blackboard
