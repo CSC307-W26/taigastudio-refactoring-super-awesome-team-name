@@ -11,13 +11,12 @@ import java.util.List;
  * Burndown Chart Panel for TaigaStudio Application
  *
  * @author Isaac-Pruett
- * @version 2026.01.27
+ * @version 2026.02.03
  */
 public class BurndownChart extends JPanel {
 	
-	private final Sprint currentSprint;
+	private Sprint currentSprint;
 	private static final int POINT_SIZE = 6;
-	private final Blackboard blackboard;
 	private final int maxPoints;
 	private final int sprintLengthDays;
 	private static final long MILLIS_PER_DAY = 86400000;
@@ -26,8 +25,8 @@ public class BurndownChart extends JPanel {
 	private final int topPadding = 20;
 	private final int bottomPadding = 70;
 	
-	public BurndownChart(Blackboard blackboard) {
-		this.blackboard = blackboard;
+	public BurndownChart() {
+		Blackboard blackboard = Blackboard.getInstance();
 		this.maxPoints = 40;
 		this.currentSprint = blackboard.getActiveSprint();
 		long end = currentSprint.getExpiration().getTime();
@@ -38,14 +37,17 @@ public class BurndownChart extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
+		Blackboard blackboard = Blackboard.getInstance();
+
 		Point origin = new Point(this.leftPadding, this.topPadding);
 		Dimension dims = this.getSize();
-		//this.currentSprint = this.blackboard.getActiveSprint();
-		//List<dao.Task> allTasks = this.blackboard.getAllTasks().stream().toList();
+		this.currentSprint = blackboard.getActiveSprint();
+		List<dao.Task> allTasks = blackboard.getAllTasks().stream().toList();
 		this.drawAxes(g);
 		this.drawProjectedLine(origin, g);
 		g.setColor(Color.GREEN);
-		//this.drawCompletionLine(g, allTasks);
+		this.drawCompletionLine(g, allTasks);
 	}
 	
 	private void drawCompletionLine(Graphics g, List<Task> allTasks) {
@@ -54,7 +56,7 @@ public class BurndownChart extends JPanel {
 		int graphHeight = dims.height - this.bottomPadding;
 		int intervalWidth = (graphWidth - leftPadding) / this.sprintLengthDays;
 		int intervalHeight = (graphHeight - topPadding) / this.maxPoints;
-		for (int i = 0; i < this.sprintLengthDays; i++) {
+		for (int i = 0; i < this.sprintLengthDays - 1; i++) {
 			int priorCompletedTasks = 0;
 			int tasksCompletedToday = 0;
 			for (Task task : allTasks) {
@@ -71,7 +73,6 @@ public class BurndownChart extends JPanel {
 					// do nothing, the task is not completed.
 				}
 			}
-			// dao.Task t = allTasks.get(i);
 			int x = leftPadding + (i * intervalWidth);
 			int y = topPadding + (intervalHeight * (priorCompletedTasks - tasksCompletedToday));
 			int x2 = x + intervalWidth;
@@ -115,7 +116,7 @@ public class BurndownChart extends JPanel {
 		
 		
 		for (int i = 0; i < this.sprintLengthDays; i++) {
-			//g.drawLine(leftPadding + (i * intervalWidth), topPadding + (i * intervalHeight), leftPadding + ((i+1) * intervalWidth), topPadding + ((i+1) * intervalHeight));
+			g.drawLine(leftPadding + (i * intervalWidth), topPadding + (i * intervalHeight), leftPadding + ((i+1) * intervalWidth), topPadding + ((i+1) * intervalHeight));
 			int x = leftPadding + (i * intervalWidth);
 			int y = topPadding + (i * intervalHeight);
 			Date current = this.currentSprint.getBeginning();
