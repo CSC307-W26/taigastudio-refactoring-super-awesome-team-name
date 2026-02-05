@@ -1,11 +1,12 @@
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * This class contains all UI components for the New Story screen.
  *
  * @author Jonathan Garcia
  * @version 1.0
  */
-import javax.swing.*;
-import java.awt.*;
 
 public class NewStoryUI {
 
@@ -179,3 +180,4 @@ public class NewStoryUI {
         b.setFocusPainted(false);
     }
 }
+
