@@ -1,253 +1,114 @@
-package stories;
-
-import javax.swing.*;
-import java.awt.*;
+import stories.Backlog;
 
 /**
- * This class builds and displays the new story screen, validates user input when "Create" is clicked, than call the
- * nanny to save the story
+ * This class creates a New Story form and handles user input before sending it to the nanny. 
  *
  * @author Jonathan Garcia
  * @version 1.0
  */
+
+import javax.swing.*;
+import java.awt.*;
+
 public class NewStoryPanel extends JPanel {
-	
-	public NewStoryPanel(NewStoryNanny newStoryNanny) {
-		JLabel titleLabel = new JLabel("New user story");
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		JTextField subjectField = new JTextField("Subject");
-		String subjectPlaceholder = "Subject";
-		subjectField.addFocusListener(new java.awt.event.FocusAdapter() {
-			public void focusGained(java.awt.event.FocusEvent e) {
-				if (subjectField.getText().equals(subjectPlaceholder)) {
-					subjectField.setText("");
-				}
-			}
-			public void focusLost(java.awt.event.FocusEvent e) {
-				if (subjectField.getText().isEmpty()) {
-					subjectField.setText(subjectPlaceholder);
-				}
-			}
-		});
-		JButton tagButton = new JButton("Add Tag ➕");
-		JTextArea descriptionArea = new JTextArea(
-			"Please add descriptive text to help others better understand this user story"
-		);
-		descriptionArea.setLineWrap(true);
-		descriptionArea.setWrapStyleWord(true);
-		JScrollPane descriptionScroller = new JScrollPane(descriptionArea);
-		String descriptionPlaceholder =
-			"Please add descriptive text to help others better understand this user story";
-		descriptionArea.addFocusListener(new java.awt.event.FocusAdapter() {
-			public void focusGained(java.awt.event.FocusEvent e) {
-				if (descriptionArea.getText().equals(descriptionPlaceholder)) {
-					descriptionArea.setText("");
-				}
-			}
-			public void focusLost(java.awt.event.FocusEvent e) {
-				if (descriptionArea.getText().isEmpty()) {
-					descriptionArea.setText(descriptionPlaceholder);
-				}
-			}
-		});
-		JLabel attachmentLabel = new JLabel("0 Attachments");
-		JButton attachmentButton = new JButton("Add Attachment");
-		JLabel dropZoneLabel = new JLabel("Drop attachments here!");
-		String[] status = {"New", "Ready", "In Progress", "Ready to Test", "Done", "Archived"};
-		JComboBox<String> statusComboBox = new JComboBox<>(status);
-		JLabel locationLabel = new JLabel("LOCATION");
-		JRadioButton bottomRadio = new JRadioButton("at the bottom");
-		JRadioButton topRadio = new JRadioButton("on top");
-		ButtonGroup locationGroup = new ButtonGroup();
-		locationGroup.add(bottomRadio);
-		locationGroup.add(topRadio);
-		JPanel locationRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 0));
-		locationRow.add(bottomRadio);
-		locationRow.add(topRadio);
-		JButton assignButton = new JButton("Assign");
-		JButton assignToMeButton = new JButton("Assign to me");
-		JPanel assignRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-		assignRow.add(assignButton);
-		assignRow.add(assignToMeButton);
-		JLabel pointsLabel = new JLabel("POINTS");
-		JButton uxButton = new JButton("UX");
-		JButton designButton = new JButton("Design");
-		JButton frontButton = new JButton("Front");
-		JButton backButton = new JButton("Back");
-		JLabel errorLabel = new JLabel("");
-		JButton createButton = new JButton("CREATE");
-		JButton cancelButton = new JButton("✕");
-		
-		JPanel pointColumn = new JPanel();
-		pointColumn.setLayout(new BoxLayout(pointColumn, BoxLayout.Y_AXIS));
-		pointColumn.add(shrink(uxButton));
-		pointColumn.add(Box.createVerticalStrut(6));
-		pointColumn.add(shrink(designButton));
-		pointColumn.add(Box.createVerticalStrut(6));
-		pointColumn.add(shrink(frontButton));
-		pointColumn.add(Box.createVerticalStrut(6));
-		pointColumn.add(shrink(backButton));
-		
-		JLabel storyPointsLabel = new JLabel("Total Points:");
-		JTextField storyPointsField = new JTextField();
-		storyPointsField.setColumns(3);
-		JButton dueDateButton = new JButton("\u23F0");
-		JButton teamRequirementButton = new JButton("\uD83D\uDC65");
-		JButton clientRequirementButton = new JButton("\uD83D\uDCC1");
-		JButton blockButton = new JButton("\uD83D\uDD12");
-		
-		JPanel miscRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-		miscRow.add(dueDateButton);
-		miscRow.add(teamRequirementButton);
-		miscRow.add(clientRequirementButton);
-		miscRow.add(blockButton);
-		
-		tagButton.setPreferredSize(new Dimension(120, 30));
-		assignButton.setPreferredSize(new Dimension(120, 30));
-		assignToMeButton.setPreferredSize(new Dimension(120, 30));
-		uxButton.setPreferredSize(new Dimension(300, 32));
-		designButton.setPreferredSize(new Dimension(300, 32));
-		frontButton.setPreferredSize(new Dimension(300, 32));
-		backButton.setPreferredSize(new Dimension(300, 32));
-		storyPointsField.setPreferredSize(new Dimension(120, 30));
-		attachmentButton.setPreferredSize(new Dimension(160, 30));
-		createButton.setPreferredSize(new Dimension(260, 45));
-		cancelButton.setPreferredSize(new Dimension(60, 60));
-		dueDateButton.setPreferredSize(new Dimension(60, 60));
-		teamRequirementButton.setPreferredSize(new Dimension(60, 60));
-		clientRequirementButton.setPreferredSize(new Dimension(60, 60));
-		blockButton.setPreferredSize(new Dimension(60, 60));
-		
-		makeTransparent(cancelButton);
-		makeTransparent(tagButton);
-		makeTransparent(assignButton);
-		makeTransparent(assignToMeButton);
-		errorLabel.setForeground(Color.RED);
-		
-		JPanel header = new JPanel(new BorderLayout());
-		header.add(titleLabel, BorderLayout.CENTER);
-		header.add(cancelButton, BorderLayout.EAST);
-		
-		JPanel pointsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-		pointsPanel.add(storyPointsLabel);
-		pointsPanel.add(storyPointsField);
-		
-		setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(12, 12, 12, 12);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		add(header, gbc);
-		gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		add(subjectField, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		add(statusComboBox, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		add(shrink(tagButton), gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		add(locationLabel, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 3;
-		add(locationRow, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weighty = 1;
-		add(descriptionScroller, gbc);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weighty = 0;
-		gbc.gridx = 1;
-		gbc.gridy = 4;
-		add(assignRow, gbc);
-		gbc.gridy = 5;
-		add(pointsLabel, gbc);
-		gbc.gridy = 6;
-		add(pointColumn, gbc);
-		gbc.gridy = 7;
-		gbc.anchor = GridBagConstraints.WEST;
-		add(pointsPanel, gbc);
-		gbc.gridy = 8;
-		add(miscRow, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		add(attachmentLabel, gbc);
-		gbc.gridy = 5;
-		add(shrink(attachmentButton), gbc);
-		gbc.gridy = 6;
-		add(dropZoneLabel, gbc);
-		gbc.gridy = 10;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		add(createButton, gbc);
-		gbc.gridy = 9;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.WEST;
-		add(errorLabel, gbc);
-		
-		createButton.addActionListener(e -> {
-			String title = subjectField.getText().trim();
-			String desc = descriptionArea.getText().trim();
-			String pts = storyPointsField.getText().trim();
-			
-			if ((title.isEmpty() || title.equals(subjectPlaceholder)) &&
-				(desc.isEmpty() || desc.equals(descriptionPlaceholder))) {
-				errorLabel.setText("Title and Description are required.");
-				return;
-			} else if (title.isEmpty() || title.equals(subjectPlaceholder)) {
-				errorLabel.setText("Title is required.");
-				return;
-			} else if (desc.isEmpty() || desc.equals(descriptionPlaceholder)) {
-				errorLabel.setText("Description is required.");
-				return;
-			}
-			
-			if (pts.isEmpty()) {
-				errorLabel.setText("dao.Story Points are required.");
-				return;
-			}
-			
-			int points;
-			try {
-				points = Integer.parseInt(pts);
-			} catch (NumberFormatException ex) {
-				errorLabel.setText("dao.Story Points must be an integer.");
-				return;
-			}
-			
-			if (points <= 0) {
-				errorLabel.setText("dao.Story Points must be a positive integer.");
-				return;
-			}
-			
-			errorLabel.setText(" ");
-			newStoryNanny.createStory(title, desc, points);
-		});
-		
-		cancelButton.addActionListener(e ->
-			SwingUtilities.getWindowAncestor(this).dispose()
-		);
-	}
-	
-	private JPanel shrink(Component c) {
-		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		p.add(c);
-		return p;
-	}
-	
-	private void makeTransparent(JButton b) {
-		b.setOpaque(false);
-		b.setContentAreaFilled(false);
-		b.setBorderPainted(false);
-		b.setFocusPainted(false);
-	}
+
+    private final NewStoryNanny nanny;
+    private final Runnable onSuccess;
+    private final Runnable onCancel;
+    private final Backlog backlog;
+
+    private final NewStoryUI ui = new NewStoryUI();
+
+    public NewStoryPanel(NewStoryNanny nanny, Runnable onSuccess, Runnable onCancel, Backlog backlog) {
+        this.nanny = nanny;
+        this.onSuccess = onSuccess;
+        this.onCancel = onCancel;
+        this.backlog = backlog;
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = NewStoryUI.baseGbc();
+
+        NewStoryUI.addToGrid(this, ui.header, gbc, 0, 0, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
+
+        NewStoryUI.addToGrid(this, ui.subjectField, gbc, 0, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.statusComboBox, gbc, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.tagWrap, gbc, 0, 2, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.locationLabel, gbc, 1, 2, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.descriptionScroller, gbc, 0, 3, 1, 1, GridBagConstraints.BOTH, 1, 1, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.locationRow, gbc, 1, 3, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.attachmentLabel, gbc, 0, 4, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.assignRow, gbc, 1, 4, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.attachmentWrap, gbc, 0, 5, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.pointsLabel, gbc, 1, 5, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.dropZoneLabel, gbc, 0, 6, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.pointColumn, gbc, 1, 6, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.pointsPanel, gbc, 1, 7, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.miscRow, gbc, 1, 8, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+
+        NewStoryUI.addToGrid(this, ui.errorLabel, gbc, 0, 9, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        NewStoryUI.addToGrid(this, ui.createButton, gbc, 0, 10, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
+
+        wireActions();
+    }
+
+    private void wireActions() {
+        ui.createButton.addActionListener(e -> {
+            String title = ui.subjectField.getText().trim();
+            String desc = ui.descriptionArea.getText().trim();
+            String pts = ui.storyPointsField.getText().trim();
+            int priority = (Integer) ui.priorityBox.getSelectedItem();
+
+            if ((title.isEmpty() || title.equals(NewStoryUI.SUBJECT_PLACEHOLDER)) &&
+                    (desc.isEmpty() || desc.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER))) {
+                ui.errorLabel.setText("Title and Description are required.");
+                return;
+            } else if (title.isEmpty() || title.equals(NewStoryUI.SUBJECT_PLACEHOLDER)) {
+                ui.errorLabel.setText("Title is required.");
+                return;
+            } else if (desc.isEmpty() || desc.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER)) {
+                ui.errorLabel.setText("Description is required.");
+                return;
+            }
+
+            if (pts.isEmpty()) {
+                ui.errorLabel.setText("Story Points are required.");
+                return;
+            }
+
+            int points;
+            try {
+                points = Integer.parseInt(pts);
+            } catch (NumberFormatException ex) {
+                ui.errorLabel.setText("Story Points must be an integer.");
+                return;
+            }
+
+            NewStoryNanny.Result r = nanny.createStory(title, desc, points, priority);
+            if (!r.isOk()) {
+                ui.errorLabel.setText(r.getMessage());
+                return;
+            }
+
+            backlog.addStory(r.getStory());
+            ui.errorLabel.setText(" ");
+            JOptionPane.showMessageDialog(this, r.getMessage());
+            clearForm();
+            onSuccess.run();
+        });
+
+        ui.cancelButton.addActionListener(e -> onCancel.run());
+    }
+
+    private void clearForm() {
+        ui.subjectField.setText(NewStoryUI.SUBJECT_PLACEHOLDER);
+        ui.descriptionArea.setText(NewStoryUI.DESCRIPTION_PLACEHOLDER);
+        ui.storyPointsField.setText("");
+        ui.priorityBox.setSelectedIndex(0);
+    }
 }
