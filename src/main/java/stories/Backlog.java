@@ -14,25 +14,25 @@ import javax.swing.*;
  */
 public class Backlog {
 
-	private final DefaultListModel<Story> model = new DefaultListModel<>();
-	private final JList<Story> storyList = new JList<>(model);
-	
-	public Backlog() {
-		storyList.setCellRenderer(new BacklogStoryRenderer());
-		storyList.setFixedCellHeight(80);
-		storyList.setFixedCellWidth(400);
-	}
-	
-	public void addStory(Story story) {
-		model.addElement(story);
-	}
-	
-	public JList<Story> getStoryList() {
-		return storyList;
-	}
-	
-	public int getBacklogSize() {
-		return model.size();
-	}
- 
+    private final DefaultListModel<Story> model = new DefaultListModel<>();
+    private final JList<Story> storyList = new JList<>(model);
+
+    public Backlog() {
+        storyList.setCellRenderer(new BacklogStoryRenderer());
+        storyList.setFixedCellHeight(110);
+        storyList.setFixedCellWidth(400);
+    }
+
+    public void addStory(Story story) {
+        model.addElement(story);
+    }
+
+    public JList<Story> getStoryList() {
+        return storyList;
+    }
+
+    public int getBacklogSize() {
+        return model.size();
+    }
+
 }
