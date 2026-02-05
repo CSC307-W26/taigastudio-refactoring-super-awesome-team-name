@@ -10,14 +10,14 @@ import dao.Task;
 /**
  * This class is the nanny for tasks.EditTaskTest
  *
- * @author ALEXANDER BLOOMER
+ * @author Alexander Bloomer, Collin Howard
  * @version 1.0
  */
-public class EditTaskNanny {
+public class TaskNanny {
  
 	private final JFrame main;
 	
-	public EditTaskNanny(JFrame main) {
+	public TaskNanny(JFrame main) {
 		this.main = main;
 	}
 	
@@ -28,12 +28,27 @@ public class EditTaskNanny {
 		main.revalidate();
 		main.repaint();
 	}
+
+	public void createButton(String subject, String body) {
+		Blackboard blackboard = Blackboard.getInstance();
+		blackboard.addTask(new Task(String.valueOf(blackboard.getTaskCount()), subject, body));
+		main.setContentPane(new TaskListPanel(main, this));
+		main.revalidate();
+		main.repaint();
+	}
 	
 	
 	public void EditButton(ActionEvent e) {
 		String id = e.getActionCommand();
 		Blackboard blackboard = Blackboard.getInstance();
-		main.setContentPane(new EditTaskPanel(blackboard.getTask(id), this));
+		main.setContentPane(new TaskPanel(blackboard.getTask(id), this));
+		main.revalidate();
+		main.repaint();
+	}
+
+	public void createButton(ActionEvent e) {
+		
+		main.setContentPane(new TaskPanel(null, this));
 		main.revalidate();
 		main.repaint();
 	}

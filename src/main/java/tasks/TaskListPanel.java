@@ -22,13 +22,13 @@ import dao.Task;
  */
 public class TaskListPanel extends JPanel {
 	
-	public TaskListPanel(JFrame main, EditTaskNanny nanny) {
+	public TaskListPanel(JFrame main, TaskNanny nanny) {
 		Blackboard blackboard = Blackboard.getInstance();
 		Collection<Task> taskCollection = blackboard.getAllTasks();
 		List<Task> tasks = new ArrayList<>(taskCollection);
 		
 		
-		setLayout(new GridLayout(tasks.size(), 2));
+		setLayout(new GridLayout(tasks.size()+1, 2));
 		
 		for (int i = 0; i < tasks.size(); i++) {
 			Task t = tasks.get(i);
@@ -44,6 +44,11 @@ public class TaskListPanel extends JPanel {
 			add(edit, BorderLayout.EAST);
 			
 		}
+
+		JButton create = new JButton("Create");
+		// create.setActionCommand(String.valueOf(i));
+		create.addActionListener(e -> nanny.createButton(e));
+		add(create);
 	}
 	
 }

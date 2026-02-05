@@ -18,18 +18,23 @@ import dao.Task;
 /**
  * Panel for editing an existing task with input fields for subject and body.
  *
- * @author ALEXANDER BLOOMER
+ * @author Alexander Bloomer, Collin Howard
  * @version 1.0
  */
-public class EditTaskPanel extends JPanel {
+public class TaskPanel extends JPanel {
 	
-	public EditTaskPanel(Task task, EditTaskNanny nanny) {
-		String subjectText = task.getSubject();
-		String bodyText = task.getBody();
+	public TaskPanel(Task task, TaskNanny nanny) {
+		boolean isCreate = task == null;
+		String subjectText = "";
+		String bodyText = "";
+		if(!isCreate){
+			subjectText = task.getSubject();
+			bodyText = task.getBody();
+		}
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(10, 10));
 		
-		JLabel title = new JLabel("Edit dao.Task", SwingConstants.CENTER);
+		JLabel title = isCreate ? new JLabel("Create Task", SwingConstants.CENTER) : new JLabel("Edit Task", SwingConstants.CENTER);
 		title.setFont(title.getFont().deriveFont(Font.BOLD, 28f));
 		
 		JPanel center = new JPanel();
@@ -45,9 +50,13 @@ public class EditTaskPanel extends JPanel {
 		body.setPreferredSize(new Dimension(0, 100));
 		body.setBorder(new LineBorder(Color.blue));
 		
-		JButton saveButton = new JButton("SAVE");
-		saveButton.addActionListener(e -> nanny.SaveButton(new Task(task.getId(), subject.getText(), body.getText())));
-		
+		JButton saveButton = isCreate ? new JButton("CREATE") : new JButton("SAVE");
+		if(isCreate){
+			saveButton.addActionListener(e -> nanny.createButton(subject.getText(), body.getText()));
+		}
+		else{
+			saveButton.addActionListener(e -> nanny.SaveButton(new Task(task.getId(), subject.getText(), body.getText())));
+		}
 		center.setLayout(new BorderLayout(10, 10));
 		center.add(subject, BorderLayout.NORTH);
 		center.add(body, BorderLayout.CENTER);

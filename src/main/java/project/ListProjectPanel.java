@@ -16,9 +16,7 @@ public class ListProjectPanel extends JPanel{
 
     private Project project;
 
-    public ListProjectPanel(Project project, ListProjectPanelMouseNanny mouseNanny){
-
-
+    public ListProjectPanel(Project project, ListProjectPanelMouseNanny mouseNanny, JFrame main){
         this.project = project;
 
         //establish bounds and color of the panel
@@ -31,7 +29,7 @@ public class ListProjectPanel extends JPanel{
 
         //create title and description display
         JLabel title = new JLabel();
-        title.setText(project.getTitle() + project.getId());
+        title.setText(project.getTitle());
         JTextPane description = new JTextPane();
         description.setEditable(false);
         description.setText(project.getDescription());
@@ -52,7 +50,8 @@ public class ListProjectPanel extends JPanel{
         //button to edit project
         JButton editButton = new JButton();
         editButton.setText("Edit");
-        editButton.addActionListener(e -> EditProjectPanelNanny.editScreen(project));
+        EditProjectPanelNanny nanny = new EditProjectPanelNanny(main);
+        editButton.addActionListener(e -> nanny.editScreen(project));
         add(editButton, BorderLayout.EAST);
         addMouseListener(mouseNanny);
     }
@@ -61,5 +60,5 @@ public class ListProjectPanel extends JPanel{
         return project;
     }
 
-    
+
 }

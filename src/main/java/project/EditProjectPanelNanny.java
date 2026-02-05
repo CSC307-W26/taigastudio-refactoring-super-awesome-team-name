@@ -15,24 +15,24 @@ import javax.swing.*;
  */
 public class EditProjectPanelNanny {
 
-	private static JFrame main;
+	private JFrame main;
 	
 	public EditProjectPanelNanny(JFrame m) {
 		main = m;
 	}
 	
-	public static void editScreen(Project project) {
-		EditProjectPanel edit = new EditProjectPanel(project);
+	public void editScreen(Project project) {
+		EditProjectPanel edit = new EditProjectPanel(project, main);
 		main.setContentPane(edit);
 		main.revalidate();
 		main.repaint();
 	}
 	
-	public static void close() {
+	public void close() {
 		defaultScreen();
 	}
 	
-	public static void save(Project project, String title, String description) {
+	public void save(Project project, String title, String description) {
 		if(project.getId().isEmpty()){
 			project.setId(UUID.randomUUID().toString());
 			Blackboard.getInstance().addProject(project);
@@ -42,14 +42,14 @@ public class EditProjectPanelNanny {
 		defaultScreen();
 	}
 	
-	public static void defaultScreen() {
+	public void defaultScreen() {
 		ListProjectHomePanel panel = new ListProjectHomePanel(main);
 		main.setContentPane(panel);
 		main.revalidate();
 		main.repaint();
 	}
 	
-	public static void delete(Project project) {
+	public void delete(Project project) {
 		Blackboard.getInstance().deleteProject(project);
 		defaultScreen();
 	}
