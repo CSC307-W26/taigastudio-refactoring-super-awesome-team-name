@@ -1,5 +1,7 @@
 package stories;
 
+import dao.Story;
+
 import javax.swing.*;
 import java.awt.*;
 

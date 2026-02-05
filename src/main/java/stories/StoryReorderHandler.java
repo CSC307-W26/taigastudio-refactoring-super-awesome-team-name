@@ -7,15 +7,19 @@ package stories; /**
  * @version 1.0
  *
  */
-
 import dao.Story;
 
 import javax.swing.*;
 import java.awt.datatransfer.Transferable;
 
-class StoryReorderHandler extends TransferHandler {
+public class StoryReorderHandler extends TransferHandler {
+    private final Backlog backlog;
+    private final BacklogPanel panel;
 
-    private int fromIndex = -1;
+    public StoryReorderHandler(Backlog backlog, BacklogPanel panel) {
+        this.backlog = backlog;
+        this.panel = panel;
+    }
 
     @Override
     public int getSourceActions(JComponent c) {
@@ -24,10 +28,8 @@ class StoryReorderHandler extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        JList<?> list = (JList<?>) c;
-        fromIndex = list.getSelectedIndex();
-        Story story = (Story) list.getSelectedValue();
-        return new BacklogStoryTransferable(story);
+        StoryRow row = (StoryRow) c;
+        return new BacklogStoryTransferable(row.getStory());
     }
 
     @Override
@@ -38,29 +40,18 @@ class StoryReorderHandler extends TransferHandler {
     @Override
     public boolean importData(TransferSupport support) {
         try {
-            JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
-            int toIndex = dl.getIndex();
-
-            JList list = (JList) support.getComponent();
-            DefaultListModel model = (DefaultListModel) list.getModel();
-
-            Story moved = (Story) support.getTransferable()
+            Story dragged = (Story) support.getTransferable()
                     .getTransferData(BacklogStoryTransferable.STORY_FLAVOR);
 
-            // Remove old position
-            model.remove(fromIndex);
+            DropLocation dl = support.getDropLocation();
+            int dropIndex = panel.getDropIndex(dl.getDropPoint());
 
-            // Adjust index if needed
-            if (toIndex > fromIndex) toIndex--;
-
-            // Insert at new position
-            model.add(toIndex, moved);
-
-            list.setSelectedIndex(toIndex);
+            backlog.moveStory(dragged, dropIndex);
+            panel.refresh();
             return true;
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

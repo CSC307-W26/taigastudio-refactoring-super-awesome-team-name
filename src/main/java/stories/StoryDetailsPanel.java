@@ -6,6 +6,8 @@ package stories; /**
  * @author Nick Grant
  * @version 1.0 - draft
  */
+import dao.Story;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,8 +20,8 @@ public class StoryDetailsPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         panel.add(new JLabel("ID: " + story.getID()));
-        panel.add(new JLabel("Subject: " + story.getSubject()));
-        panel.add(new JLabel("Points: " + story.getScore()));
+        panel.add(new JLabel("Subject: " + story.getTitle()));
+        panel.add(new JLabel("Points: " + story.getPoints()));
 
         add(panel, BorderLayout.CENTER);
     }

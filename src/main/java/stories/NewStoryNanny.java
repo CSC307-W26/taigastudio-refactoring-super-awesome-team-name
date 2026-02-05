@@ -10,6 +10,7 @@ import dao.Story;
  */
 
 public class NewStoryNanny {
+    private StoryCreator newStoryFrame;
 
     public Result createStory(String title, String desc, int points, int priority) {
         String t = (title == null) ? "" : title.trim();
@@ -24,6 +25,9 @@ public class NewStoryNanny {
 
 
         return Result.ok("Story saved successfully!", s);
+    }
+    public void setFrame(StoryCreator frame){
+        newStoryFrame = frame;
     }
 
     public static class Result {
