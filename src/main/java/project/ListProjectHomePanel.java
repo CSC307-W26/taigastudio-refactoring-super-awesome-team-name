@@ -34,7 +34,7 @@ public class ListProjectHomePanel extends JPanel {
 		Panel topPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
 		JButton newProjectButton = new JButton();
 		newProjectButton.setText("New dao.Project");
-		newProjectButton.addActionListener(e -> NewProjectPanelNanny.newProject());
+		newProjectButton.addActionListener(e -> EditProjectPanelNanny.editScreen(new Project("","","")));
 		topPanel.add(newProjectButton);
 		add(topPanel, BorderLayout.NORTH);
 	}
