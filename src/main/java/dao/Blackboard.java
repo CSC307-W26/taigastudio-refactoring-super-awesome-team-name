@@ -1,4 +1,5 @@
 package dao;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,97 +11,95 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Isaac-Pruett
  */
 public class Blackboard {
-	private static Blackboard blackboard;
-	private final Map<String, Project> projects;
-	private final Map<String, UserStory> userStories;
-	private final Map<String, Task> tasks;
-	private Sprint activeSprint;
 
+    private static Blackboard blackboard;
+    private final Map<String, Project> projects;
+    private final Map<String, UserStory> userStories;
+    private final Map<String, Task> tasks;
+    private Sprint activeSprint;
 
-	private static LinkedList<String> stories = new LinkedList<>();
+    private static LinkedList<String> stories = new LinkedList<>();
 
-	public String curEditTaskID = "0";
+    public String curEditTaskID = "0";
 
-	public Blackboard() {
-		this.projects = new ConcurrentHashMap<>();
-		this.userStories = new ConcurrentHashMap<>();
-		this.tasks = new ConcurrentHashMap<>();
-	}
+    public Blackboard() {
+        this.projects = new ConcurrentHashMap<>();
+        this.userStories = new ConcurrentHashMap<>();
+        this.tasks = new ConcurrentHashMap<>();
+    }
 
-	public void deleteProject(Project project) {
-		projects.remove(project.getTitle());
-	}
+    public void deleteProject(Project project) {
+        projects.remove(project.getId());
+    }
 
-	public void addProject(Project project) {
-		projects.put(project.getTitle(), project);
-	}
+    public void addProject(Project project) {
+        projects.put(project.getId(), project);
+    }
 
-	public Project getProject(String projectId) {
-		return projects.get(projectId);
-	}
+    public Project getProject(String projectId) {
+        return projects.get(projectId);
+    }
 
-	public Collection<Project> getAllProjects() {
-		return projects.values();
-	}
+    public Collection<Project> getAllProjects() {
+        return projects.values();
+    }
 
-	public void addUserStory(UserStory story) {
-		userStories.put(story.getId(), story);
-	}
+    public void addUserStory(UserStory story) {
+        userStories.put(story.getId(), story);
+    }
 
-	public UserStory getUserStory(String storyId) {
-		return userStories.get(storyId);
-	}
+    public UserStory getUserStory(String storyId) {
+        return userStories.get(storyId);
+    }
 
-	public Collection<UserStory> getAllUserStories() {
-		return userStories.values();
-	}
+    public Collection<UserStory> getAllUserStories() {
+        return userStories.values();
+    }
 
-	public void addTask(Task task) {
-		tasks.put(task.getId(), task);
-	}
+    public void addTask(Task task) {
+        tasks.put(task.getId(), task);
+    }
 
-	public Task getTask(String taskId) {
-		return tasks.get(taskId);
-	}
+    public Task getTask(String taskId) {
+        return tasks.get(taskId);
+    }
 
-	public Collection<Task> getAllTasks() {
-		return tasks.values();
-	}
+    public Collection<Task> getAllTasks() {
+        return tasks.values();
+    }
 
-	public synchronized void setActiveSprint(Sprint sprint) {
-		this.activeSprint = sprint;
-	}
+    public synchronized void setActiveSprint(Sprint sprint) {
+        this.activeSprint = sprint;
+    }
 
-	public Sprint getActiveSprint() {
-		return activeSprint;
-	}
+    public Sprint getActiveSprint() {
+        return activeSprint;
+    }
 
-	public int getProjectCount() {
-		return projects.size();
-	}
+    public int getProjectCount() {
+        return projects.size();
+    }
 
-	public int getStoryCount() {
-		return userStories.size();
-	}
+    public int getStoryCount() {
+        return userStories.size();
+    }
 
-	public int getTaskCount() {
-		return tasks.size();
-	}
+    public int getTaskCount() {
+        return tasks.size();
+    }
 
-	public static Blackboard getInstance(){
-		if(blackboard == null){
-			blackboard = new Blackboard();
-		}
-		return blackboard;
-	}
+    public static Blackboard getInstance() {
+        if (blackboard == null) {
+            blackboard = new Blackboard();
+        }
+        return blackboard;
+    }
 
+    public static void addStory(String story) {
+        stories.add(story);
+    }
 
-
-	public static void addStory(String story) {
-		stories.add(story);
-	}
-
-	public static LinkedList<String> getStories() {
-		return stories;
-	}
+    public static LinkedList<String> getStories() {
+        return stories;
+    }
 }
