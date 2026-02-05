@@ -1,4 +1,5 @@
 package project;
+import java.util.UUID;
 
 import dao.Blackboard;
 import dao.Project;
@@ -8,12 +9,12 @@ import javax.swing.*;
 /**
  * dao.Project Panel Nanny
  *
- * @author Owen Sam
+ * @author Owen Sam and Owen Ledrick
  * @version 1.0
  *
  */
 public class EditProjectPanelNanny {
-	
+
 	private static JFrame main;
 	
 	public EditProjectPanelNanny(JFrame m) {
@@ -28,23 +29,21 @@ public class EditProjectPanelNanny {
 	}
 	
 	public static void close() {
-		System.out.println("Button: Close");
 		defaultScreen();
 	}
 	
 	public static void save(Project project, String title, String description) {
-		Project newProject = new Project(title, description);
-		Blackboard.getInstance().deleteProject(project);
-		Blackboard.getInstance().addProject(newProject);
-		System.out.println("Button: Save");
-		//System.out.println("Title: " + dao.Blackboard.getInstance().getProject(title).getTitle());
-		//System.out.println("Description: " + dao.Blackboard.getInstance().getProject(title).getDescription());
-		System.out.println("dao.Project Data Size: " + Blackboard.getInstance().getAllProjects().size());
+		if(project.getId().isEmpty()){
+			project.setId(UUID.randomUUID().toString());
+			Blackboard.getInstance().addProject(project);
+		}
+		project.setTitle(title);
+		project.setDescription(description);
 		defaultScreen();
 	}
 	
 	public static void defaultScreen() {
-		StartingPanel panel = new StartingPanel();
+		ListProjectHomePanel panel = new ListProjectHomePanel(main);
 		main.setContentPane(panel);
 		main.revalidate();
 		main.repaint();
@@ -52,7 +51,6 @@ public class EditProjectPanelNanny {
 	
 	public static void delete(Project project) {
 		Blackboard.getInstance().deleteProject(project);
-		System.out.println("dao.Project deleted");
 		defaultScreen();
 	}
 
