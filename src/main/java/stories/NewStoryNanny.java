@@ -1,56 +1,44 @@
-package stories;
-
-import dao.Blackboard;
-
-import javax.swing.*;
-
 /**
- * This class validate input, saves stories to backlog, and refreshes main window
+ * This class validates story input and creates Story objects.
  *
  * @author Jonathan Garcia
  * @version 1.0
  */
+
+import dao.Story;
+
 public class NewStoryNanny {
-	private final JFrame main;
-	
-	private static final String DESCRIPTION_PLACEHOLDER =
-		"Please add descriptive text to help others better understand this user story";
-	
-	public NewStoryNanny(JFrame main) {
-		this.main = main;
-	}
-	
-	public void createStory(String subject, String description, int points) {
-		String title = (subject == null) ? "" : subject.trim();
-		String desc = (description == null) ? "" : description.trim();
-		
-		if (title.isEmpty() || title.equals("Subject")) {
-			System.out.println("Please input a valid subject.");
-			return;
-		}
-		
-		if (desc.isEmpty() || desc.equals(DESCRIPTION_PLACEHOLDER)) {
-			System.out.println("Please input a valid description.");
-			return;
-		}
-		
-		if (points < 0) {
-			System.out.println("Please input valid story points.");
-			return;
-		}
-		
-		String story = "Title:" + title + " Points:" + points + " Description:" + desc;
-		Blackboard.addStory(story);
-		
-		System.out.println("Saved story: " + story);
-		System.out.println("Amount of stories: " + Blackboard.getStories().size());
-		
-		switchUI();
-	}
-	
-	private void switchUI() {
-		main.setTitle("New dao.Story");
-		main.revalidate();
-		main.repaint();
-	}
+
+    public Result createStory(String title, String desc, int points, int priority) {
+        String t = (title == null) ? "" : title.trim();
+        String d = (desc == null) ? "" : desc.trim();
+
+        if (t.isEmpty() || t.equals("Subject")) return Result.fail("Title is required.");
+        if (d.isEmpty() || d.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER)) return Result.fail("Description is required.");
+        if (points <= 0) return Result.fail("Points must be a positive integer.");
+        if (priority < 1 || priority > 5) return Result.fail("Priority must be 1–5.");
+
+        Story s = new Story(t, points, "New", d);
+
+        return Result.ok("Story saved successfully!", s);
+    }
+
+    public static class Result {
+        private final boolean ok;
+        private final String message;
+        private final Story story;
+
+        private Result(boolean ok, String message, Story story) {
+            this.ok = ok;
+            this.message = message;
+            this.story = story;
+        }
+
+        public static Result ok(String m, Story s) { return new Result(true, m, s); }
+        public static Result fail(String m) { return new Result(false, m, null); }
+
+        public boolean isOk() { return ok; }
+        public String getMessage() { return message; }
+        public Story getStory() { return story; }
+    }
 }
