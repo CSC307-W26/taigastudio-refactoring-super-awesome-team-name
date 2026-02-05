@@ -1,5 +1,7 @@
 package dao;
 
+import stories.Backlog;
+
 /**
  * This class represents a project
  *
@@ -12,11 +14,13 @@ public class Project {
     private String title;
     private String description;
     private String id;
+    private Backlog backlog;
    
-    public Project(String id, String title, String description){
+    public Project(String id, String title, String description, Backlog backlog){
         this.id = id;
         this.title = title;
         this.description = description;
+        this.backlog = backlog;
     }
    
     public String getDescription(){
@@ -41,5 +45,13 @@ public class Project {
 
     public void setId(String id){
         this.id = id;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 }

@@ -1,5 +1,7 @@
 package project;
 
+import stories.BacklogWindow;
+
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,7 +15,7 @@ import java.awt.event.MouseListener;
  */
 public class ListProjectPanelMouseNanny implements MouseListener {
 	
-	private static JFrame main;
+	private JFrame main;
 	
 	public ListProjectPanelMouseNanny(JFrame main) {
 		this.main = main;
@@ -24,8 +26,8 @@ public class ListProjectPanelMouseNanny implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		ListProjectPanel p = (ListProjectPanel) e.getSource();
 		main.setTitle(p.getProject().getTitle());
-    // TempBacklogPanel bl = new TempBacklogPanel(p.getProject());
-		// main.setContentPane(bl);
+		BacklogWindow bw = new BacklogWindow(p.getProject());
+		main.setContentPane(bw);
 		main.revalidate();
 		main.repaint();
 	}

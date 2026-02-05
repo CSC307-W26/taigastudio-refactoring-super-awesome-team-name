@@ -17,7 +17,11 @@ public class ListProjectPanel extends JPanel{
     private Project project;
 
     public ListProjectPanel(Project project, ListProjectPanelMouseNanny mouseNanny){
+
+
         this.project = project;
+
+        //establish bounds and color of the panel
         setLayout(new BorderLayout());
         setBackground(new Color(220, 220, 220));
         setBorder(BorderFactory.createEtchedBorder());
@@ -25,8 +29,9 @@ public class ListProjectPanel extends JPanel{
         setPreferredSize(new Dimension(1000, 130));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));
 
+        //create title and description display
         JLabel title = new JLabel();
-        title.setText(project.getTitle());
+        title.setText(project.getTitle() + project.getId());
         JTextPane description = new JTextPane();
         description.setEditable(false);
         description.setText(project.getDescription());
@@ -35,6 +40,7 @@ public class ListProjectPanel extends JPanel{
         descWrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         descWrapper.add(description);
 
+        //panel to align text to the left
         JPanel textOrg = new JPanel();
         textOrg.setBackground(new Color(220, 220, 220));
         textOrg.setLayout(new BoxLayout(textOrg, BoxLayout.Y_AXIS));
@@ -43,6 +49,7 @@ public class ListProjectPanel extends JPanel{
         textOrg.setAlignmentX(Component.LEFT_ALIGNMENT);;
         add(textOrg, BorderLayout.WEST);
 
+        //button to edit project
         JButton editButton = new JButton();
         editButton.setText("Edit");
         editButton.addActionListener(e -> EditProjectPanelNanny.editScreen(project));
@@ -53,15 +60,6 @@ public class ListProjectPanel extends JPanel{
     public Project getProject() {
         return project;
     }
-    
-    public void deleteProject(Project project) {
-    }
-    
-    public void addProject(Project newProject) {
-    }
-    
-    public Collection<Project> getAllProjects() {
-        return null;
-    }
+
     
 }

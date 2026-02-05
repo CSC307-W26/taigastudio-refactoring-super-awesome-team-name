@@ -2,6 +2,7 @@ package project;
 
 import dao.Blackboard;
 import dao.Project;
+import stories.Backlog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class ListProjectHomePanel extends JPanel {
 
 	public ListProjectHomePanel(JFrame main) {
 		this.projects = Blackboard.getInstance().getAllProjects();
-		
+		System.out.println(this.projects);
 		this.setLayout(new BorderLayout());
 		JPanel projectRows = new JPanel();
 		projectRows.setLayout(new BoxLayout(projectRows, BoxLayout.Y_AXIS));
@@ -32,7 +33,7 @@ public class ListProjectHomePanel extends JPanel {
 		Panel topPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
 		JButton newProjectButton = new JButton();
 		newProjectButton.setText("New Project");
-		newProjectButton.addActionListener(e -> EditProjectPanelNanny.editScreen(new Project("","","")));
+		newProjectButton.addActionListener(e -> EditProjectPanelNanny.editScreen(new Project("","","", new Backlog())));
 		topPanel.add(newProjectButton);
 		add(topPanel, BorderLayout.NORTH);
 	}
