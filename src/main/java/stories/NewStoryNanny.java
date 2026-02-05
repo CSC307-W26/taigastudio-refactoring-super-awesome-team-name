@@ -1,3 +1,5 @@
+package stories;
+
 import dao.Story;
 
 /**

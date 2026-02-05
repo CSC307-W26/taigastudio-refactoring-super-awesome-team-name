@@ -1,30 +1,30 @@
-package stories;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-/**
- * This class creates a listener for button
- * that adds stories to the backlog
+package stories; /**
+ * This class creates a listener to open the frame
+ * to create a new story when button is pressed
  *
  * @author Nick Grant
  * @version 1.0
  *
  */
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class NewStoryListener implements ActionListener {
-
     private final Backlog backlog;
-
-    public NewStoryListener(Backlog backlog) {
+    private final BacklogPanel backlogPanel;
+    public NewStoryListener(BacklogPanel backlogPanel, Backlog backlog) {
         this.backlog = backlog;
+        this.backlogPanel = backlogPanel;
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         if (cmd.equals("+ USER STORY")) {
-            //  backlog.addStory(new dao.Story("hello", 4, "New", "draft"));
+            NewStoryNanny nanny = new NewStoryNanny(backlog, backlogPanel);
+            new StoryCreator(nanny);
+            backlogPanel.refresh();
         }
-    }
 
+    }
 }
