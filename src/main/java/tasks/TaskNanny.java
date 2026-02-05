@@ -21,9 +21,10 @@ public class TaskNanny {
 		this.main = main;
 	}
 	
-	public void SaveButton(Task newTask) {
+	public void SaveButton(Task oldTask, String subject, String body) {
 		Blackboard blackboard = Blackboard.getInstance();
-		blackboard.addTask(newTask);
+		blackboard.getTask(oldTask.getId()).setSubject(subject);
+		blackboard.getTask(oldTask.getId()).setBody(body);
 		main.setContentPane(new TaskListPanel(main, this));
 		main.revalidate();
 		main.repaint();

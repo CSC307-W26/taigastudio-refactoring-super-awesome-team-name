@@ -17,7 +17,7 @@ import dao.Task;
 /**
  * Panel that displays a list of tasks with edit buttons.
  *
- * @author ALEXANDER BLOOMER
+ * @author Alexander Bloomer, Collin Howard
  * @version 1.0
  */
 public class TaskListPanel extends JPanel {

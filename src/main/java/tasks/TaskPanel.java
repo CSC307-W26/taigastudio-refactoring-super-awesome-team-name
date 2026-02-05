@@ -55,7 +55,7 @@ public class TaskPanel extends JPanel {
 			saveButton.addActionListener(e -> nanny.createButton(subject.getText(), body.getText()));
 		}
 		else{
-			saveButton.addActionListener(e -> nanny.SaveButton(new Task(task.getId(), subject.getText(), body.getText())));
+			saveButton.addActionListener(e -> nanny.SaveButton(task, subject.getText(), body.getText()));
 		}
 		center.setLayout(new BorderLayout(10, 10));
 		center.add(subject, BorderLayout.NORTH);
