@@ -1,0 +1,35 @@
+classDiagram
+    direction TB
+    
+    class JFrame
+    class JPanel
+    class TaskRepository {
+        <<interface>>
+    }
+    class Task
+    class Blackboard
+    class CreateTaskTest
+    class CreateTaskNanny
+    class CreateTaskPanel
+    class TitleDocumentListener {
+        <<inner class>>
+    }
+    class TitleFocusListener {
+        <<inner class>>
+    }
+    
+    JFrame <|-- CreateTaskTest
+    JPanel <|-- CreateTaskPanel
+    TaskRepository <|.. CreateTaskTest : implements
+    
+    CreateTaskTest *-- CreateTaskNanny : creates
+    CreateTaskTest *-- Blackboard : contains
+    CreateTaskNanny *-- CreateTaskPanel : creates
+    CreateTaskPanel *-- TitleDocumentListener : contains
+    CreateTaskPanel *-- TitleFocusListener : contains
+    
+    CreateTaskNanny --> TaskRepository : uses
+    CreateTaskNanny --> JFrame : uses
+    CreateTaskNanny --> Task : creates
+    CreateTaskPanel --> CreateTaskNanny : uses
+    Blackboard --> Task : stores
