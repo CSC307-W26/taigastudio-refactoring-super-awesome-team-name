@@ -1,6 +1,5 @@
 package tasks;
 
-import dao.Blackboard;
 import dao.Task;
 
 import javax.swing.*;
@@ -14,24 +13,18 @@ import javax.swing.*;
 public class CreateTaskNanny {
 	
 	private final JFrame main;
-	private final Blackboard blackboard;
+	private final TaskRepository taskRepository;
 	
-	public CreateTaskNanny(JFrame main, Blackboard blackboard) {
+	public CreateTaskNanny(JFrame main, TaskRepository taskRepository) {
 		this.main = main;
-		this.blackboard = blackboard;
+		this.taskRepository = taskRepository;
 	}
 	
 	public void createButton(String title, String body) {
-		String id = String.valueOf(blackboard.getTaskCount());
-		
+		String id = String.valueOf(taskRepository.getTaskCount());
 		Task newTask = new Task(id, title, body);
-		blackboard.addTask(newTask);
-		
-		JOptionPane.showMessageDialog(main,
-			"dao.Task created successfully!\nTitle: " + title,
-			"Success",
-			JOptionPane.INFORMATION_MESSAGE);
-		
+		taskRepository.addTask(newTask);
+		showSuccessMessage(title);
 		showCreateTaskPanel();
 	}
 	
@@ -40,16 +33,22 @@ public class CreateTaskNanny {
 	}
 	
 	public void showCreateTaskPanel() {
-		main.setContentPane(new CreateTaskPanel(this, blackboard));
+		main.setContentPane(new CreateTaskPanel(this));
 		main.revalidate();
 		main.repaint();
 	}
 	
-	public void showTaskListPanel() {
+	private void showSuccessMessage(String title) {
+		JOptionPane.showMessageDialog(main,
+			"Task created successfully!\nTitle: " + title,
+			"Success",
+			JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	private void showTaskListPanel() {
 		if (main instanceof CreateTaskTest) {
 			CreateTaskTest testMain = (CreateTaskTest) main;
 			testMain.showTaskList();
 		}
 	}
-	
 }
