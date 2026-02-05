@@ -12,19 +12,19 @@ import java.awt.event.ActionListener;
  *
  */
 public class NewStoryListener implements ActionListener {
-	
-	private final Backlog backlog;
-	
-	public NewStoryListener(Backlog backlog) {
-		this.backlog = backlog;
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
-		if (cmd.equals("+ USER STORY")) {
-			//  backlog.addStory(new dao.Story("hello", 4, "New", "draft"));
-		}
-	}
+
+    private final Backlog backlog;
+
+    public NewStoryListener(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String cmd = e.getActionCommand();
+        if (cmd.equals("+ USER STORY")) {
+            //  backlog.addStory(new dao.Story("hello", 4, "New", "draft"));
+        }
+    }
 
 }
