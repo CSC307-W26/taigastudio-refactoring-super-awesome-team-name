@@ -17,18 +17,18 @@ import dao.Task;
 /**
  * Panel that displays a list of tasks with edit buttons.
  *
- * @author ALEXANDER BLOOMER
+ * @author Alexander Bloomer, Collin Howard
  * @version 1.0
  */
 public class TaskListPanel extends JPanel {
 	
-	public TaskListPanel(JFrame main, EditTaskNanny nanny) {
+	public TaskListPanel(JFrame main, TaskNanny nanny) {
 		Blackboard blackboard = Blackboard.getInstance();
 		Collection<Task> taskCollection = blackboard.getAllTasks();
 		List<Task> tasks = new ArrayList<>(taskCollection);
 		
 		
-		setLayout(new GridLayout(tasks.size(), 2));
+		setLayout(new GridLayout(tasks.size()+1, 2));
 		
 		for (int i = 0; i < tasks.size(); i++) {
 			Task t = tasks.get(i);
@@ -38,12 +38,17 @@ public class TaskListPanel extends JPanel {
 			
 			JButton edit = new JButton("Edit");
 			edit.setActionCommand(String.valueOf(i));
-			edit.addActionListener(e -> nanny.EditButton(e));
+			edit.addActionListener(e -> nanny.OpenEditTaskPanel(e));
 			
 			add(taskText, BorderLayout.CENTER);
 			add(edit, BorderLayout.EAST);
 			
 		}
+
+		JButton create = new JButton("Create");
+		// create.setActionCommand(String.valueOf(i));
+		create.addActionListener(e -> nanny.OpenCreateTaskPanel(e));
+		add(create);
 	}
 	
 }

@@ -1,4 +1,11 @@
+package project;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
+
+import dao.*;
+
 import java.awt.*;
 import java.util.Date;
 
@@ -13,6 +20,7 @@ public class NewSprintPanel extends JFrame {
     private JTextField startDate;
     private JTextField endDate;
     private JButton makeSprint;
+    DateFormat formatter=new SimpleDateFormat("MM/dd/yy");
 
     public NewSprintPanel(){
         super("Create New Sprint");
@@ -48,8 +56,8 @@ public class NewSprintPanel extends JFrame {
         String sprintName=name.getText();
         String start=startDate.getText();
         String end=endDate.getText();
-        Date startDate=new Date(start);
-        Date endDate=new Date(end);
-        BlackBoard.blackboard.addSprint(new dao.Sprint(startDate, endDate));
+        Date startDate=formatter.parse(start);
+        Date endDate=formatter.parse(end);
+        Blackboard.getInstance().setActiveSprintSprint(new Sprint(startDate, endDate));
     }
 }

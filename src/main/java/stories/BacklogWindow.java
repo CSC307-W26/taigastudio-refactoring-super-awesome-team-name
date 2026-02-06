@@ -5,51 +5,29 @@ package stories; /**
  * and a panel for the backlog list
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.1
  *
  */
-
-import dao.Story;
+import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BacklogWindow extends JPanel {
-    private JList<Story> storyList;
 
-    public BacklogWindow(JFrame frame){
-        //stories.Backlog backlog = frame.backlog;
+    public BacklogWindow(BacklogScreen frame) {
         setLayout(new BorderLayout());
 
-        JPanel backlogheader = new JPanel(new BorderLayout());
-        JPanel backlogpanel = new JPanel(new BorderLayout());
-
-        backlogheader.add(new JLabel("stories.Backlog"), BorderLayout.WEST);
+        // HEADER
+        JPanel backlogHeader = new JPanel(new BorderLayout());
+        backlogHeader.add(new JLabel("Backlog"), "West");
+        add(backlogHeader, "North");
+        // MAIN LIST PANEL
+        BacklogPanel backlogPanel = new BacklogPanel(frame.backlog, frame::changeWindow);
+        add(backlogPanel, "Center");
 
         JButton newStoryBtn = new JButton("+ USER STORY");
-        //stories.NewStoryListener newStoryListener = new stories.NewStoryListener(backlog);
-        //newStoryBtn.addActionListener(newStoryListener);
-        backlogheader.add(newStoryBtn, BorderLayout.EAST);
-
-        backlogpanel.add(backlogheader, BorderLayout.NORTH);
-        //storyList = backlog.getStoryList();
-        storyList.setDragEnabled(true);
-        storyList.setDropMode(DropMode.INSERT);
-        storyList.setTransferHandler(new StoryReorderHandler());
-        backlogpanel.add(storyList, BorderLayout.CENTER);
-
-        add(backlogpanel, BorderLayout.CENTER);
+        newStoryBtn.addActionListener(new NewStoryListener(backlogPanel, frame.backlog));
+        backlogHeader.add(newStoryBtn, "East");
     }
-
-    /*
-    public void changeWindow(JPanel newWindow){
-        remove(window);
-        window = newWindow;
-        add(window, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-    }
-     */
-
-
 }

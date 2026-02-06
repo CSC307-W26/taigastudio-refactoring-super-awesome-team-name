@@ -137,7 +137,6 @@ public class Sprint {
 		this.beginning = beginning;
 	}
 	
-	public record Designation(String developer, UserStory story) {
-	}
+	public record Designation(String developer, UserStory story) {}
 }
 

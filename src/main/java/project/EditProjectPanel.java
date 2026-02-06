@@ -14,7 +14,8 @@ import java.awt.*;
  */
 public class EditProjectPanel extends JPanel {
 	
-	public EditProjectPanel(Project project) {
+	public EditProjectPanel(Project project, JFrame main) {
+		EditProjectPanelNanny nanny = new EditProjectPanelNanny(main);
 		JButton close = new JButton();
 		JButton save = new JButton();
 		JButton delete = new JButton();
@@ -59,10 +60,10 @@ public class EditProjectPanel extends JPanel {
 		buttonPanel.add(save);
 		if(!project.getTitle().isEmpty() || !project.getDescription().isEmpty()){
 			buttonPanel.add(delete);
-			delete.addActionListener(e -> EditProjectPanelNanny.delete(project));
+			delete.addActionListener(e -> nanny.delete(project));
 		}
-		close.addActionListener(e -> EditProjectPanelNanny.close());
-		save.addActionListener(e -> EditProjectPanelNanny.save(project, title.getText(), description.getText()));
+		close.addActionListener(e -> nanny.close());
+		save.addActionListener(e -> nanny.save(project, title.getText(), description.getText()));
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 

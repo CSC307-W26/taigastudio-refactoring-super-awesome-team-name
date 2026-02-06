@@ -20,10 +20,10 @@ import dao.Story;
  */
 
 public class StoryEditor extends JPanel {
-    public StoryEditor(Story story) {
-        String subjectText = story.getSubject();
-        String descriptionText = story.getDescription();
-        int scoreValue = story.getScore();
+    public StoryEditor(NewStoryNanny nanny, Story storyToEdit) {
+        String subjectText = storyToEdit.getSubject();
+        String descriptionText = storyToEdit.getDescription();
+        int scoreValue = storyToEdit.getScore();
 
         setLayout(new BorderLayout(10, 10));
 

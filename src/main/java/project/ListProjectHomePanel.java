@@ -2,7 +2,6 @@ package project;
 
 import dao.Blackboard;
 import dao.Project;
-import stories.Backlog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,15 +24,16 @@ public class ListProjectHomePanel extends JPanel {
 		JPanel projectRows = new JPanel();
 		projectRows.setLayout(new BoxLayout(projectRows, BoxLayout.Y_AXIS));
 		for (Project project : projects) {
-			ListProjectPanel p = new ListProjectPanel(project, new ListProjectPanelMouseNanny(main));
+			ListProjectPanel p = new ListProjectPanel(project, new ListProjectPanelMouseNanny(main), main);
 			projectRows.add(p);
 		}
 		JScrollPane scrollPane = new JScrollPane(projectRows);
 		add(scrollPane);
 		Panel topPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
 		JButton newProjectButton = new JButton();
+		EditProjectPanelNanny nanny = new EditProjectPanelNanny(main);
 		newProjectButton.setText("New Project");
-		newProjectButton.addActionListener(e -> EditProjectPanelNanny.editScreen(new Project("","","", new Backlog())));
+		newProjectButton.addActionListener(e -> nanny.editScreen(new Project("","","")));
 		topPanel.add(newProjectButton);
 		add(topPanel, BorderLayout.NORTH);
 	}
