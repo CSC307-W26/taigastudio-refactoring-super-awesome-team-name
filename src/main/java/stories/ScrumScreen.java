@@ -23,7 +23,7 @@ public class ScrumScreen extends JPanel implements SwitchWindow{
         header.add(new JLabel("Header"));
 
         add(header, "North");
-        add(new ToolBar(this), "West");
+        add(new ToolBar(backlog, this::changeWindow), "West");
         add(this.window, "Center");
     }
 
