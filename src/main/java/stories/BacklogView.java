@@ -13,11 +13,11 @@ import java.util.Date;
 import javax.swing.*;
 import java.awt.*;
 
-public class BacklogWindow extends JPanel {
+public class BacklogView extends JPanel {
     private BurndownChart chart;
 
 
-    public BacklogWindow(Backlog backlog, SwitchWindow windowSwitcher) {
+    public BacklogView(Backlog backlog, SwitchWindow windowSwitcher) {
         setLayout(new BorderLayout());
 
         // Fixed header

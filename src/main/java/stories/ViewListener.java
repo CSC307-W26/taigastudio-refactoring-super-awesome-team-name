@@ -25,7 +25,7 @@ public class ViewListener implements ActionListener {
 
             assert scrumBtnChoice != null;
             if (scrumBtnChoice.equals("Backlog")) {
-                frame.changeWindow(new BacklogWindow(frame.backlog, frame::changeWindow));
+                frame.changeWindow(new BacklogView(frame.backlog, frame::changeWindow));
             } else if (scrumBtnChoice.equals("Sprint")) {
                 frame.changeWindow(new SprintWindowExample());
             }

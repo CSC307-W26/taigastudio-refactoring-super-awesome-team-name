@@ -12,28 +12,21 @@ import dao.Backlog;
 import java.awt.BorderLayout;
 import javax.swing.*;
 
-public class ScrumScreen extends JFrame implements SwitchWindow{
+public class ScrumScreen extends JPanel implements SwitchWindow{
     final Backlog backlog = new Backlog();
-    private JPanel window = new BacklogWindow(backlog, this::changeWindow);
+    private JPanel window = new BacklogView(backlog, this::changeWindow);
 
     public ScrumScreen() {
-        super("Window");
-        setSize(1000, 800);
-        setResizable(false);
         setLayout(new BorderLayout());
+
         JPanel header = new JPanel();
-        JLabel label = new JLabel("Header");
-        header.add(label);
-        ToolBar toolbar = new ToolBar(this);
-        add(toolbar, "West");
+        header.add(new JLabel("Header"));
+
         add(header, "North");
+        add(new ToolBar(this), "West");
         add(this.window, "Center");
-        setVisible(true);
     }
 
-    static void main(String[] args) {
-        new ScrumScreen();
-    }
 
     @Override
     public void changeWindow(JPanel newWindow) {
@@ -44,3 +37,4 @@ public class ScrumScreen extends JFrame implements SwitchWindow{
         repaint();
     }
 }
+
