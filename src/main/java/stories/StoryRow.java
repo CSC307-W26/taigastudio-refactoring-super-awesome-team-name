@@ -1,10 +1,10 @@
-package stories; /**
-
+package stories;
+/**
  * This class is the individual panels
  * for each story in the backlog
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.1
  */
 import dao.Story;
 
@@ -14,7 +14,7 @@ import java.awt.*;
 public class StoryRow extends JPanel {
     private final Story story;
 
-    public StoryRow(Story story, SwitchWindow windowSwitcher) {
+    public StoryRow(Story story, SwitchWindow windowSwitcher, StoryReorderHandler handler) {
         this.story = story;
         setLayout(null); // absolute positioning
 
@@ -35,7 +35,8 @@ public class StoryRow extends JPanel {
             windowSwitcher.changeWindow(new StoryDetailsPanel(story));
         });
         add(details);
-
+        setTransferHandler(handler);
+        addMouseListener(handler.createDragStarter(this));
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
     }
 

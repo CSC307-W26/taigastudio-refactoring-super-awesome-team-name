@@ -1,5 +1,14 @@
 package stories;
+/**
 
+ * This class creates the panel which
+ * displays the backlog structure
+ *
+ * @author Nick Grant
+ * @version 1.0
+ *
+ */
+import dao.Backlog;
 import dao.Story;
 
 import javax.swing.*;
@@ -27,12 +36,10 @@ public class BacklogPanel extends JPanel {
 
     public void refresh() {
         listPanel.removeAll();
-
+        StoryReorderHandler handler = new StoryReorderHandler(backlog, this);
+        listPanel.setTransferHandler(handler);
         for (Story s : backlog.getStories()) {
-            StoryRow row = new StoryRow(s, windowSwitcher);
-            row.setTransferHandler(new StoryReorderHandler(backlog, this));
-            row.addMouseListener(new DragMouseAdapter());
-            row.addMouseMotionListener(new DragMouseAdapter());
+            StoryRow row = new StoryRow(s, windowSwitcher, handler);
             listPanel.add(row);
         }
 
@@ -40,12 +47,20 @@ public class BacklogPanel extends JPanel {
         listPanel.repaint();
     }
     public int getDropIndex(Point p) {
-        for (int i = 0; i < listPanel.getComponentCount(); i++) {
-            Rectangle bounds = listPanel.getComponent(i).getBounds();
-            if (p.y < bounds.y + bounds.height / 2) {
-                return i;
+        int index = 0;
+
+        for (Component c : listPanel.getComponents()) {
+            Rectangle r = c.getBounds();
+            if (p.y < r.y + r.height / 2) {
+                return index;
             }
+            index++;
         }
+
         return listPanel.getComponentCount();
+    }
+
+    public JPanel getListPanel() {
+        return listPanel;
     }
 }

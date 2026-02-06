@@ -3,9 +3,11 @@ package stories; /**
  * to create a new story when button is pressed
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.1
  *
  */
+
+import dao.Backlog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

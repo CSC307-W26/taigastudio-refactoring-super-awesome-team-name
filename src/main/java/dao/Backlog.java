@@ -1,6 +1,4 @@
-package stories;
-
-import dao.Story;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  * for the backlog, also has functionally to add story to backlog
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.1
  *
  */
 
@@ -22,16 +20,20 @@ public class Backlog {
         stories.add(story);
     }
 
-    public List<Story> getStories() {
-        return stories;
-    }
+    public List<Story> getStories() { return stories; }
 
-    public int getBacklogSize() {
+    public Story get(int index){ return stories.get(index); }
+    public int indexOf(Story story){ return stories.indexOf(story); }
+    public int size() {
         return stories.size();
     }
 
     public void moveStory(Story story, int newIndex) {
-        stories.remove(story);
+        int oldIndex = stories.indexOf(story);
+        if (oldIndex == -1) return;
+
+        stories.remove(oldIndex);
         stories.add(newIndex, story);
     }
+
 }

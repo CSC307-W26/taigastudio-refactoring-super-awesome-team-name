@@ -1,6 +1,6 @@
 package stories;
 
-import stories.Backlog;
+import dao.Backlog;
 
 /**
  * This class creates a New Story form and handles user input before sending it to the nanny. 

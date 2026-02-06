@@ -14,6 +14,8 @@ public class Story {
     private final int points;
     private final String status;
     private final int priority;
+    private final int ID;
+    private static int countStories = 0;
 
     public Story(String title, String description, int points, String status, int priority) {
         this.title = title;
@@ -21,6 +23,7 @@ public class Story {
         this.points = points;
         this.status = status;
         this.priority = priority;
+        ID = ++countStories;
     }
 
     public String getTitle() {
@@ -42,6 +45,8 @@ public class Story {
     public int getPriority() {
         return priority;
     }
+
+    public int getID() { return ID; }
 
     @Override
     public String toString() {

@@ -1,7 +1,5 @@
 package dao;
 
-import stories.Backlog;
-
 /**
  * This class represents a project
  *

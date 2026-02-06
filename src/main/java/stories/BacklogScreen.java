@@ -3,9 +3,11 @@ package stories; /**
  * This class creates window for the backlog and toolbar
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.1
  *
  */
+import dao.Backlog;
+
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

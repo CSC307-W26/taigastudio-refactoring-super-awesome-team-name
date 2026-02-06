@@ -2,7 +2,6 @@ package project;
 
 import dao.Blackboard;
 import dao.Project;
-import stories.Backlog;
 
 import javax.swing.*;
 import java.awt.*;

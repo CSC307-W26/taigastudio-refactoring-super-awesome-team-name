@@ -1,4 +1,4 @@
-import stories.Backlog;
+import dao.Backlog;
 import stories.NewStoryListener;
 
 import javax.swing.*;

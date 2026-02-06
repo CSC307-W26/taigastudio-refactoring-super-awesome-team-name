@@ -5,7 +5,7 @@ package stories; /**
  * and a panel for the backlog list
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.1
  *
  */
 import com.sun.tools.javac.Main;
