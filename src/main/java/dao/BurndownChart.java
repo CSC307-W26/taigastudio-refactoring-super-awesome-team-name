@@ -1,6 +1,4 @@
-import dao.Blackboard;
-import dao.Sprint;
-import dao.Task;
+package dao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,6 +102,9 @@ public class BurndownChart extends JPanel {
 	private void drawAxes(Graphics g) {
 		g.setColor(Color.BLACK);
 		Dimension dims = this.getSize();
+		// shrink x-axis label font
+		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
+
 		g.drawLine(this.leftPadding, this.topPadding, this.leftPadding, dims.height - this.bottomPadding);
 		g.drawLine(this.leftPadding, dims.height - this.bottomPadding, dims.width - this.rightPadding, dims.height - this.bottomPadding);
 		

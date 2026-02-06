@@ -25,12 +25,18 @@ public class BacklogPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
+        JPanel backlogHeader = new JPanel(new BorderLayout());
+        backlogHeader.add(new JLabel("Backlog"), "West");
+        add(backlogHeader, BorderLayout.NORTH);
+        JButton newStoryBtn = new JButton("+ USER STORY");
+        newStoryBtn.addActionListener(new NewStoryListener(this, backlog));
+        backlogHeader.add(newStoryBtn, "East");
+
         listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 
-        JScrollPane scroll = new JScrollPane(listPanel);
-        add(scroll, BorderLayout.CENTER);
 
+        add(listPanel, BorderLayout.CENTER);
         refresh();
     }
 
@@ -39,7 +45,7 @@ public class BacklogPanel extends JPanel {
         StoryReorderHandler handler = new StoryReorderHandler(backlog, this);
         listPanel.setTransferHandler(handler);
         for (Story s : backlog.getStories()) {
-            StoryRow row = new StoryRow(s, windowSwitcher, handler);
+            StoryRow row = new StoryRow(this, s, windowSwitcher, handler);
             listPanel.add(row);
         }
 
@@ -63,4 +69,12 @@ public class BacklogPanel extends JPanel {
     public JPanel getListPanel() {
         return listPanel;
     }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(800, listPanel.getPreferredSize().height + 50);
+    }
+
+    public void delStory(Story s){ backlog.delStory(s); }
+
 }

@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ToolBar extends JPanel {
-    public ToolBar(BacklogScreen frame) {
+    public ToolBar(ScrumScreen frame) {
         this.setBackground(new Color(75, 81, 99));
         JLabel title = new JLabel("Taiga Studio");
         title.setForeground(new Color(37, 168, 157));
