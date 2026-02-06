@@ -38,7 +38,7 @@ public class TaskListPanel extends JPanel {
 			
 			JButton edit = new JButton("Edit");
 			edit.setActionCommand(String.valueOf(i));
-			edit.addActionListener(e -> nanny.EditButton(e));
+			edit.addActionListener(e -> nanny.OpenEditTaskPanel(e));
 			
 			add(taskText, BorderLayout.CENTER);
 			add(edit, BorderLayout.EAST);
@@ -47,7 +47,7 @@ public class TaskListPanel extends JPanel {
 
 		JButton create = new JButton("Create");
 		// create.setActionCommand(String.valueOf(i));
-		create.addActionListener(e -> nanny.createButton(e));
+		create.addActionListener(e -> nanny.OpenCreateTaskPanel(e));
 		add(create);
 	}
 	

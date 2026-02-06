@@ -21,7 +21,10 @@ public class TaskNanny {
 		this.main = main;
 	}
 	
-	public void SaveButton(Task oldTask, String subject, String body) {
+	public void SaveTaskButton(Task oldTask, String subject, String body) {
+		if(subject.equals("")){
+			return;
+		}
 		Blackboard blackboard = Blackboard.getInstance();
 		blackboard.getTask(oldTask.getId()).setSubject(subject);
 		blackboard.getTask(oldTask.getId()).setBody(body);
@@ -29,8 +32,11 @@ public class TaskNanny {
 		main.revalidate();
 		main.repaint();
 	}
-
-	public void createButton(String subject, String body) {
+	
+	public void CreateTaskButton(String subject, String body) {
+		if(subject.equals("")){
+			return;
+		}
 		Blackboard blackboard = Blackboard.getInstance();
 		blackboard.addTask(new Task(String.valueOf(blackboard.getTaskCount()), subject, body));
 		main.setContentPane(new TaskListPanel(main, this));
@@ -39,7 +45,7 @@ public class TaskNanny {
 	}
 	
 	
-	public void EditButton(ActionEvent e) {
+	public void OpenEditTaskPanel(ActionEvent e) {
 		String id = e.getActionCommand();
 		Blackboard blackboard = Blackboard.getInstance();
 		main.setContentPane(new TaskPanel(blackboard.getTask(id), this));
@@ -47,7 +53,7 @@ public class TaskNanny {
 		main.repaint();
 	}
 
-	public void createButton(ActionEvent e) {
+	public void OpenCreateTaskPanel(ActionEvent e) {
 		
 		main.setContentPane(new TaskPanel(null, this));
 		main.revalidate();
