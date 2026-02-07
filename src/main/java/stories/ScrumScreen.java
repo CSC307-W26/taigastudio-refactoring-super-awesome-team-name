@@ -8,15 +8,23 @@ package stories;
  */
 
 import dao.Backlog;
+import dao.Project;
+import project.EditProjectPanelNanny;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
 
 public class ScrumScreen extends JPanel implements SwitchWindow{
-    final Backlog backlog = new Backlog();
-    private JPanel window = new BacklogView(backlog, this::changeWindow);
 
-    public ScrumScreen() {
+    final Backlog backlog;
+    private JPanel window;
+    private JFrame main;
+
+    public ScrumScreen(JFrame main, Backlog backlog) {
+        this.main = main;
+        this.backlog = backlog;
+        this.window = new BacklogView(this.backlog, this::changeWindow);
+
         setLayout(new BorderLayout());
 
         JPanel header = new JPanel();
@@ -25,6 +33,13 @@ public class ScrumScreen extends JPanel implements SwitchWindow{
         add(header, "North");
         add(new ToolBar(backlog, this::changeWindow), "West");
         add(this.window, "Center");
+
+        // exit button to return to the homepage
+        JButton exit = new JButton();
+        ReturnNanny returnNanny = new ReturnNanny();
+        exit.setText("Return");
+        exit.addActionListener(e -> returnNanny.returnHome(main));
+        header.add(exit, BorderLayout.EAST);
     }
 
 

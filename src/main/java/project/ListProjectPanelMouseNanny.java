@@ -1,6 +1,6 @@
 package project;
 
-import stories.BacklogWindow;
+import stories.ScrumScreen;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
  * and handles the transition to the project backlog view when clicked.
  *
  * @author Johnny Parini
- * @version 1.0
+ * @version 1.1
  */
 public class ListProjectPanelMouseNanny implements MouseListener {
 	
@@ -26,8 +26,8 @@ public class ListProjectPanelMouseNanny implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		ListProjectPanel p = (ListProjectPanel) e.getSource();
 		main.setTitle(p.getProject().getTitle());
-		BacklogWindow bw = new BacklogWindow(p.getProject());
-		main.setContentPane(bw);
+		ScrumScreen scrumScreen = new ScrumScreen(main, p.getProject().getBacklog());
+		main.setContentPane(scrumScreen);
 		main.revalidate();
 		main.repaint();
 	}

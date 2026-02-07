@@ -10,7 +10,7 @@ import java.util.Collection;
  * This class represents a panel that lists a project
  *
  * @author Johnny Parini
- * @version 1.0
+ * @version 1.1
  */
 public class ListProjectPanel extends JPanel{
 

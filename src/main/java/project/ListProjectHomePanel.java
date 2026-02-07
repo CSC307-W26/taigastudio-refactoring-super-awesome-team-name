@@ -11,7 +11,7 @@ import java.util.Collection;
  * dao.Project Home Panel
  *
  * @author Johnny Parini
- * @version 1.0
+ * @version 1.1
  */
 public class ListProjectHomePanel extends JPanel {
 	
