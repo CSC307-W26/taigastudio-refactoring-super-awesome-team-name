@@ -1,12 +1,13 @@
 import dao.Blackboard;
 import dao.Sprint;
 import dao.Task;
+import dao.UserStory;
 
 import javax.swing.*;
 import java.util.Date;
 
 /**
- * Test class for dao.BurndownChart
+ * Test class for BurndownChart
  *
  * @author Isaac-Pruett
  * @version 2026.02.03
@@ -27,6 +28,16 @@ public class BurndownChartTest extends JFrame {
 		blackboard.addTask(new Task("task5", "blank", "blank"));
 		blackboard.addTask(new Task("task6", "blank", "blank"));
 		blackboard.addTask(new Task("task7", "blank", "blank"));
+
+
+		UserStory st = new UserStory("aaa", "mystory", "desc");
+		st.setPoints(8);
+
+		st.setTasks(blackboard.getAllTasks().stream().toList());
+
+		blackboard.addUserStory(st);
+
+
 		Sprint s = new Sprint(new Date(MILLIS_PER_DAY * 14));
 		s.setBeginning(new Date(0));
 		blackboard.setActiveSprint(s);

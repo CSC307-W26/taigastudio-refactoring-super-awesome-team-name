@@ -1,4 +1,7 @@
-package dao;
+import dao.Blackboard;
+import dao.Sprint;
+import dao.Task;
+import dao.UserStory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +18,7 @@ public class BurndownChart extends JPanel {
 	
 	private Sprint currentSprint;
 	private static final int POINT_SIZE = 6;
-	private final int maxPoints;
+	private int maxPoints;
 	private final int sprintLengthDays;
 	private static final long MILLIS_PER_DAY = 86400000;
 	private final int leftPadding = 70;
@@ -25,7 +28,13 @@ public class BurndownChart extends JPanel {
 	
 	public BurndownChart() {
 		Blackboard blackboard = Blackboard.getInstance();
-		this.maxPoints = 40;
+
+		int pts = 0;
+		for (UserStory s : blackboard.getAllUserStories()) {
+			pts += s.getPoints();
+		}
+		this.maxPoints = pts;
+
 		this.currentSprint = blackboard.getActiveSprint();
 		long end = currentSprint.getExpiration().getTime();
 		long start = currentSprint.getBeginning().getTime();
@@ -36,7 +45,15 @@ public class BurndownChart extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+
 		Blackboard blackboard = Blackboard.getInstance();
+
+		int pts = 0;
+		for (UserStory s : blackboard.getAllUserStories()) {
+			pts += s.getPoints();
+		}
+		this.maxPoints = pts;
+
 
 		Point origin = new Point(this.leftPadding, this.topPadding);
 		Dimension dims = this.getSize();
@@ -54,7 +71,7 @@ public class BurndownChart extends JPanel {
 		int graphHeight = dims.height - this.bottomPadding;
 		int intervalWidth = (graphWidth - leftPadding) / this.sprintLengthDays;
 		int intervalHeight = (graphHeight - topPadding) / this.maxPoints;
-		for (int i = 0; i < this.sprintLengthDays - 1; i++) {
+		for (int i = 0; i < this.sprintLengthDays; i++) {
 			int priorCompletedTasks = 0;
 			int tasksCompletedToday = 0;
 			for (Task task : allTasks) {
