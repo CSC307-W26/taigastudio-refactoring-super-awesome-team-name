@@ -4,13 +4,13 @@ package stories;
  * for each story in the backlog
  *
  * @author Nick Grant
- * @version 1.3
+ * @version 1.4
  */
 import dao.Story;
-import stories.*;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class StoryRow extends JPanel {
     private final Story story;
@@ -27,8 +27,6 @@ public class StoryRow extends JPanel {
         setPreferredSize(new Dimension(0, 60));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
-        int rowWidth = backlogPanel.getWidth();
-
         JLabel ID = new JLabel("#" + story.getID());
         ID.setForeground(new Color(37, 168, 157));
         ID.setBounds(10, 25, 20, 20);
@@ -39,12 +37,7 @@ public class StoryRow extends JPanel {
         add(subject);
 
         JLabel points = new JLabel("Points: " + story.getPoints());
-        points.setBounds(rowWidth-130, 20, 50, 20);
-        add(points);
 
-        JLabel status = new JLabel(story.getStatus());
-        status.setBounds(rowWidth-250, 20, 100, 20);
-        add(status);
 
         JButton details = new JButton("Details");
         details.setBounds(10, 5, 80, 15);
@@ -60,9 +53,7 @@ public class StoryRow extends JPanel {
         statusBtn.addActionListener(_ -> {
             story.setStatus((String) statusBtn.getSelectedItem());
         });
-        statusBtn.setBounds(rowWidth-270, 18, 110, 30);
         statusBtn.setFocusable(false);
-        add(statusBtn);
 
         JButton menuBtn = new JButton("⋮");
         menuBtn.setFocusable(false);
@@ -73,8 +64,19 @@ public class StoryRow extends JPanel {
         // Attach popup menu
         JPopupMenu menu = buildMenu();
         menuBtn.addActionListener(e -> menu.show(menuBtn, 0, menuBtn.getHeight()));
-        menuBtn.setBounds(rowWidth-60, 12, 30, 30);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int w = backlogPanel.getWidth();
+                menuBtn.setBounds(w - 60, 10, 30, 30);
+                points.setBounds(w-130, 20, 50, 20);
+                statusBtn.setBounds(w-270, 18, 110, 30);
+            }
+        });
         add(menuBtn);
+        add(statusBtn);
+        add(points);
 
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         setTransferHandler(handler);
