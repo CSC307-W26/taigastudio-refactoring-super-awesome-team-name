@@ -3,31 +3,36 @@ package stories;
 import dao.Story;
 
 /**
- * This class validate input, saves stories to backlog, and refreshes main window
+ * Validates input and creates a Story (does NOT change backlog directly).
  *
  * @author Jonathan Garcia
- * @version 2.0
+ * @version 3.0
  */
-
-public class NewStoryNanny {
-    private StoryCreator newStoryFrame;
+public
+class NewStoryNanny {
 
     public Result createStory(String title, String desc, int points, int priority) {
         String t = (title == null) ? "" : title.trim();
         String d = (desc == null) ? "" : desc.trim();
 
-        if (t.isEmpty() || t.equals("Subject")) return Result.fail("Title is required.");
-        if (d.isEmpty() || d.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER)) return Result.fail("Description is required.");
-        if (points <= 0) return Result.fail("Points must be a positive integer.");
-        if (priority < 1 || priority > 5) return Result.fail("Priority must be 1–5.");
+        if (t.isEmpty() || t.equals(NewStoryPanel.SUBJECT_PLACEHOLDER)) {
+            return Result.fail("Title is required.");
+        }
+
+        if (d.isEmpty() || d.equals(NewStoryPanel.DESCRIPTION_PLACEHOLDER)) {
+            return Result.fail("Description is required.");
+        }
+
+        if (points <= 0) {
+            return Result.fail("Points must be a positive integer.");
+        }
+
+        if (priority < 1 || priority > 5) {
+            return Result.fail("Priority must be 1–5.");
+        }
 
         Story s = new Story(t, d, points, "New", priority);
-
-
         return Result.ok("Story saved successfully!", s);
-    }
-    public void setFrame(StoryCreator frame){
-        newStoryFrame = frame;
     }
 
     public static class Result {
