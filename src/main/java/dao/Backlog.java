@@ -9,16 +9,15 @@ import java.util.List;
  * for the backlog, also has functionally to add story to backlog
  *
  * @author Nick Grant
- * @version 1.1
+ * @version 1.3
  *
  */
 
 public class Backlog {
     private final List<Story> stories = new ArrayList<>();
 
-    public void addStory(Story story) {
-        stories.add(story);
-    }
+    public void addStory(Story story) { stories.add(story); }
+    public void delStory(Story story) { stories.remove(story); }
 
     public List<Story> getStories() { return stories; }
 

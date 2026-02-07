@@ -1,19 +1,22 @@
+package stories;
+
+import dao.Backlog;
+
 import javax.swing.*;
 
 /**
- * This class handles button actions and connects the UI with the nanny.
+ * Controller for NewStoryPanel.
  *
  * @author Jonathan Garcia
- * @version 1.0
+ * @version 3.0
  */
-
 public class NewStoryController {
 
-    public static void wire(NewStoryUI ui,
-                            NewStoryNanny nanny,
-                            Runnable onSuccess,
-                            Runnable onCancel,
-                            JComponent parentForDialogs) {
+    public static void connect(NewStoryPanel ui,
+                               NewStoryNanny nanny,
+                               Backlog backlog,
+                               Runnable onSuccess,
+                               Runnable onCancel) {
 
         ui.createButton.addActionListener(e -> {
             String title = ui.subjectField.getText().trim();
@@ -21,20 +24,9 @@ public class NewStoryController {
             String pts = ui.storyPointsField.getText().trim();
             int priority = (Integer) ui.priorityBox.getSelectedItem();
 
-            if ((title.isEmpty() || title.equals(NewStoryUI.SUBJECT_PLACEHOLDER)) &&
-                    (desc.isEmpty() || desc.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER))) {
-                ui.errorLabel.setText("Title and Description are required.");
-                return;
-            } else if (title.isEmpty() || title.equals(NewStoryUI.SUBJECT_PLACEHOLDER)) {
-                ui.errorLabel.setText("Title is required.");
-                return;
-            } else if (desc.isEmpty() || desc.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER)) {
-                ui.errorLabel.setText("Description is required.");
-                return;
-            }
-
-            if (pts.isEmpty()) {
-                ui.errorLabel.setText("Story Points are required.");
+            String err = validate(title, desc, pts);
+            if (err != null) {
+                ui.errorLabel.setText(err);
                 return;
             }
 
@@ -52,8 +44,10 @@ public class NewStoryController {
                 return;
             }
 
+            backlog.addStory(r.getStory());
             ui.errorLabel.setText(" ");
-            JOptionPane.showMessageDialog(parentForDialogs, r.getMessage());
+            JOptionPane.showMessageDialog(ui, r.getMessage());
+
             clear(ui);
             onSuccess.run();
         });
@@ -61,10 +55,22 @@ public class NewStoryController {
         ui.cancelButton.addActionListener(e -> onCancel.run());
     }
 
-    private static void clear(NewStoryUI ui) {
-        ui.subjectField.setText(NewStoryUI.SUBJECT_PLACEHOLDER);
-        ui.descriptionArea.setText(NewStoryUI.DESCRIPTION_PLACEHOLDER);
+    private static String validate(String title, String desc, String pts) {
+        boolean titleBad = title.isEmpty() || title.equals(NewStoryPanel.SUBJECT_PLACEHOLDER);
+        boolean descBad = desc.isEmpty() || desc.equals(NewStoryPanel.DESCRIPTION_PLACEHOLDER);
+
+        if (titleBad && descBad) return "Title and Description are required.";
+        if (titleBad) return "Title is required.";
+        if (descBad) return "Description is required.";
+        if (pts.isEmpty()) return "Story Points are required.";
+        return null;
+    }
+
+    private static void clear(NewStoryPanel ui) {
+        ui.subjectField.setText(NewStoryPanel.SUBJECT_PLACEHOLDER);
+        ui.descriptionArea.setText(NewStoryPanel.DESCRIPTION_PLACEHOLDER);
         ui.storyPointsField.setText("");
         ui.priorityBox.setSelectedIndex(0);
+        ui.errorLabel.setText(" ");
     }
 }

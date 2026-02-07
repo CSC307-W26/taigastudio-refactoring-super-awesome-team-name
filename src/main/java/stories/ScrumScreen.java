@@ -1,37 +1,32 @@
-package stories; /**
-
+package stories;
+/**
  * This class creates window for the backlog and toolbar
  *
  * @author Nick Grant
- * @version 1.1
+ * @version 1.3
  *
  */
+
 import dao.Backlog;
 
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-public class BacklogScreen extends JFrame implements SwitchWindow{
+public class ScrumScreen extends JPanel implements SwitchWindow{
     final Backlog backlog = new Backlog();
-    private JPanel window = new BacklogWindow(this);
+    private JPanel window = new BacklogView(backlog, this::changeWindow);
 
-    public BacklogScreen() {
-        super("Window");
-        setSize(800, 600);
-        setResizable(false);
+    public ScrumScreen() {
         setLayout(new BorderLayout());
+
         JPanel header = new JPanel();
-        ToolBar toolbar = new ToolBar(this);
-        add(toolbar, "West");
+        header.add(new JLabel("Header"));
+
         add(header, "North");
+        add(new ToolBar(backlog, this::changeWindow), "West");
         add(this.window, "Center");
-        setVisible(true);
     }
 
-    static void main(String[] args) {
-        new BacklogScreen();
-    }
 
     @Override
     public void changeWindow(JPanel newWindow) {
@@ -42,3 +37,4 @@ public class BacklogScreen extends JFrame implements SwitchWindow{
         repaint();
     }
 }
+

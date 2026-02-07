@@ -1,116 +1,101 @@
 package stories;
 
-import dao.Backlog;
-
-/**
- * This class creates a New Story form and handles user input before sending it to the nanny. 
- *
- * @author Jonathan Garcia
- * @version 1.0
- */
-
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * UI panel for creating a new story.
+ *
+ * @author Jonathan Garcia
+ * @version 3.0
+ */
 public class NewStoryPanel extends JPanel {
 
-    private final NewStoryNanny nanny;
-    private final Runnable onSuccess;
-    private final Runnable onCancel;
-    private final Backlog backlog;
+    public static final String SUBJECT_PLACEHOLDER = "Subject";
+    public static final String DESCRIPTION_PLACEHOLDER =
+            "Please add descriptive text to help others better understand this user story";
 
-    private final NewStoryUI ui = new NewStoryUI();
+    public final JButton createButton = new JButton("CREATE");
+    public final JButton cancelButton = new JButton("✕");
+    public final JLabel errorLabel = new JLabel("");
 
-    public NewStoryPanel(NewStoryNanny nanny, Runnable onSuccess, Runnable onCancel, Backlog backlog) {
-        this.nanny = nanny;
-        this.onSuccess = onSuccess;
-        this.onCancel = onCancel;
-        this.backlog = backlog;
+    public final JTextField subjectField = new JTextField(SUBJECT_PLACEHOLDER);
+    public final JTextArea descriptionArea = new JTextArea(DESCRIPTION_PLACEHOLDER);
+    public final JTextField storyPointsField = new JTextField(3);
+    public final JComboBox<Integer> priorityBox = new JComboBox<>(new Integer[]{1,2,3,4,5});
 
+    public final JComboBox<String> statusComboBox = new JComboBox<>(new String[]{
+            "New", "Ready", "In Progress", "Ready to Test", "Done", "Archived"
+    });
+
+    public NewStoryPanel() {
         setLayout(new GridBagLayout());
-        GridBagConstraints gbc = NewStoryUI.baseGbc();
+        GridBagConstraints gbc = baseGbc();
 
-        NewStoryUI.addToGrid(this, ui.header, gbc, 0, 0, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
+        JPanel header = new JPanel(new BorderLayout());
+        JLabel titleLabel = new JLabel("New user story", SwingConstants.CENTER);
+        header.add(titleLabel, BorderLayout.CENTER);
+        header.add(cancelButton, BorderLayout.EAST);
 
-        NewStoryUI.addToGrid(this, ui.subjectField, gbc, 0, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.statusComboBox, gbc, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
+        descriptionArea.setLineWrap(true);
+        descriptionArea.setWrapStyleWord(true);
 
-        NewStoryUI.addToGrid(this, ui.tagWrap, gbc, 0, 2, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.locationLabel, gbc, 1, 2, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-
-        NewStoryUI.addToGrid(this, ui.descriptionScroller, gbc, 0, 3, 1, 1, GridBagConstraints.BOTH, 1, 1, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.locationRow, gbc, 1, 3, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-
-        NewStoryUI.addToGrid(this, ui.attachmentLabel, gbc, 0, 4, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.assignRow, gbc, 1, 4, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-
-        NewStoryUI.addToGrid(this, ui.attachmentWrap, gbc, 0, 5, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.pointsLabel, gbc, 1, 5, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-
-        NewStoryUI.addToGrid(this, ui.dropZoneLabel, gbc, 0, 6, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.pointColumn, gbc, 1, 6, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-
-        NewStoryUI.addToGrid(this, ui.pointsPanel, gbc, 1, 7, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.miscRow, gbc, 1, 8, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-
-        NewStoryUI.addToGrid(this, ui.errorLabel, gbc, 0, 9, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.WEST);
-        NewStoryUI.addToGrid(this, ui.createButton, gbc, 0, 10, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0, GridBagConstraints.CENTER);
-
-        wireActions();
-    }
-
-    private void wireActions() {
-        ui.createButton.addActionListener(e -> {
-            String title = ui.subjectField.getText().trim();
-            String desc = ui.descriptionArea.getText().trim();
-            String pts = ui.storyPointsField.getText().trim();
-            int priority = (Integer) ui.priorityBox.getSelectedItem();
-
-            if ((title.isEmpty() || title.equals(NewStoryUI.SUBJECT_PLACEHOLDER)) &&
-                    (desc.isEmpty() || desc.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER))) {
-                ui.errorLabel.setText("Title and Description are required.");
-                return;
-            } else if (title.isEmpty() || title.equals(NewStoryUI.SUBJECT_PLACEHOLDER)) {
-                ui.errorLabel.setText("Title is required.");
-                return;
-            } else if (desc.isEmpty() || desc.equals(NewStoryUI.DESCRIPTION_PLACEHOLDER)) {
-                ui.errorLabel.setText("Description is required.");
-                return;
+        subjectField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (subjectField.getText().equals(SUBJECT_PLACEHOLDER)) subjectField.setText("");
             }
-
-            if (pts.isEmpty()) {
-                ui.errorLabel.setText("Story Points are required.");
-                return;
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (subjectField.getText().trim().isEmpty()) subjectField.setText(SUBJECT_PLACEHOLDER);
             }
-
-            int points;
-            try {
-                points = Integer.parseInt(pts);
-            } catch (NumberFormatException ex) {
-                ui.errorLabel.setText("Story Points must be an integer.");
-                return;
-            }
-
-            NewStoryNanny.Result r = nanny.createStory(title, desc, points, priority);
-            if (!r.isOk()) {
-                ui.errorLabel.setText(r.getMessage());
-                return;
-            }
-
-            backlog.addStory(r.getStory());
-            ui.errorLabel.setText(" ");
-            JOptionPane.showMessageDialog(this, r.getMessage());
-            clearForm();
-            onSuccess.run();
         });
 
-        ui.cancelButton.addActionListener(e -> onCancel.run());
+        descriptionArea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (descriptionArea.getText().equals(DESCRIPTION_PLACEHOLDER)) descriptionArea.setText("");
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (descriptionArea.getText().trim().isEmpty()) descriptionArea.setText(DESCRIPTION_PLACEHOLDER);
+            }
+        });
+
+        JPanel pointsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        pointsPanel.add(new JLabel("Total Points:"));
+        storyPointsField.setPreferredSize(new Dimension(120, 30));
+        pointsPanel.add(storyPointsField);
+        pointsPanel.add(new JLabel("Priority:"));
+        pointsPanel.add(priorityBox);
+
+        errorLabel.setForeground(Color.RED);
+        createButton.setPreferredSize(new Dimension(260, 45));
+        cancelButton.setPreferredSize(new Dimension(60, 60));
+
+        addToGrid(this, header, gbc, 0, 0, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0);
+        addToGrid(this, subjectField, gbc, 0, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0);
+        addToGrid(this, statusComboBox, gbc, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1, 0);
+        addToGrid(this, new JScrollPane(descriptionArea), gbc, 0, 2, 2, 1, GridBagConstraints.BOTH, 1, 1);
+        addToGrid(this, pointsPanel, gbc, 0, 3, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0);
+        addToGrid(this, errorLabel, gbc, 0, 4, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0);
+        addToGrid(this, createButton, gbc, 0, 5, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0);
     }
 
-    private void clearForm() {
-        ui.subjectField.setText(NewStoryUI.SUBJECT_PLACEHOLDER);
-        ui.descriptionArea.setText(NewStoryUI.DESCRIPTION_PLACEHOLDER);
-        ui.storyPointsField.setText("");
-        ui.priorityBox.setSelectedIndex(0);
+    private static GridBagConstraints baseGbc() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(6,6,6,6);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.weightx = 1;
+        return gbc;
+    }
+
+    private static void addToGrid(JPanel parent, JComponent c, GridBagConstraints gbc,
+                                  int x, int y, int w, int h,
+                                  int fill, double wx, double wy) {
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.gridwidth = w;
+        gbc.gridheight = h;
+        gbc.fill = fill;
+        gbc.weightx = wx;
+        gbc.weighty = wy;
+        parent.add(c, gbc);
     }
 }

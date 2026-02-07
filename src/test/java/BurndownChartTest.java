@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.util.Date;
 
 /**
- * Test class for BurndownChart
+ * Test class for dao.BurndownChart
  *
  * @author Isaac-Pruett
  * @version 2026.02.03
