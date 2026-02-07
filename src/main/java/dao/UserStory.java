@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 /**
  * This class represents a user story
  *
@@ -11,6 +13,10 @@ public class UserStory {
     private String id;
     private String title;
     private String description;
+
+    private int points;
+
+    private List<Task> tasks;
 
     public UserStory(String id, String title, String description) {
         this.id = id;
@@ -40,5 +46,21 @@ public class UserStory {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

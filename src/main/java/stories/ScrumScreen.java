@@ -11,7 +11,7 @@ import dao.Backlog;
 import dao.Project;
 import project.EditProjectPanelNanny;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import javax.swing.*;
 
 public class ScrumScreen extends JPanel implements SwitchWindow{
@@ -29,7 +29,7 @@ public class ScrumScreen extends JPanel implements SwitchWindow{
 
         JPanel header = new JPanel();
         header.add(new JLabel("Header"));
-
+        header.setBackground(new Color(213, 213, 224));
         add(header, "North");
         add(new ToolBar(backlog, this::changeWindow), "West");
         add(this.window, "Center");

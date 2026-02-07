@@ -27,35 +27,56 @@ public class StoryRow extends JPanel {
         setPreferredSize(new Dimension(0, 60));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
+        int rowWidth = backlogPanel.getWidth();
+
+        JLabel ID = new JLabel("#" + story.getID());
+        ID.setForeground(new Color(37, 168, 157));
+        ID.setBounds(10, 25, 20, 20);
+        add(ID);
+
         JLabel subject = new JLabel(story.getTitle());
-        subject.setBounds(10, 25, 200, 20);  // x, y, width, height
+        subject.setBounds(35, 25, 200, 20);
         add(subject);
 
         JLabel points = new JLabel("Points: " + story.getPoints());
-        points.setBounds(600, 20, 100, 20);
+        points.setBounds(rowWidth-130, 20, 50, 20);
         add(points);
+
+        JLabel status = new JLabel(story.getStatus());
+        status.setBounds(rowWidth-250, 20, 100, 20);
+        add(status);
 
         JButton details = new JButton("Details");
         details.setBounds(10, 5, 80, 15);
         details.addActionListener(e -> {
-            windowSwitcher.changeWindow(new StoryDetailsPanel(story));
+            windowSwitcher.changeWindow(new StoryDetailsExample(story));
         });
         add(details);
+
+        JComboBox<String> statusBtn = new JComboBox<>(new String[]{
+                "New", "Ready", "In Progress", "Ready to Test", "Done", "Archived"
+        });
+        statusBtn.setSelectedItem(story.getStatus());
+        statusBtn.addActionListener(_ -> {
+            story.setStatus((String) statusBtn.getSelectedItem());
+        });
+        statusBtn.setBounds(rowWidth-270, 18, 110, 30);
+        statusBtn.setFocusable(false);
+        add(statusBtn);
 
         JButton menuBtn = new JButton("⋮");
         menuBtn.setFocusable(false);
         menuBtn.setBorderPainted(false);
         menuBtn.setContentAreaFilled(false);
-        menuBtn.setPreferredSize(new Dimension(30, 30));
+        menuBtn.setPreferredSize(new Dimension(20, 30));
 
         // Attach popup menu
         JPopupMenu menu = buildMenu();
         menuBtn.addActionListener(e -> menu.show(menuBtn, 0, menuBtn.getHeight()));
-        menuBtn.setBounds(800, 10, 30, 30);
+        menuBtn.setBounds(rowWidth-60, 12, 30, 30);
         add(menuBtn);
 
         setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-
         setTransferHandler(handler);
         addMouseListener(handler.createDragStarter(this));
     }
