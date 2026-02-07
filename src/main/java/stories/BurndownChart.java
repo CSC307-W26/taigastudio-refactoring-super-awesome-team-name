@@ -1,3 +1,5 @@
+package stories;
+
 import dao.Blackboard;
 import dao.Sprint;
 import dao.Task;

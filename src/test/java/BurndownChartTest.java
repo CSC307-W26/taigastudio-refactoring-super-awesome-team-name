@@ -2,12 +2,13 @@ import dao.Blackboard;
 import dao.Sprint;
 import dao.Task;
 import dao.UserStory;
+import stories.BurndownChart;
 
 import javax.swing.*;
 import java.util.Date;
 
 /**
- * Test class for BurndownChart
+ * Test class for stories.BurndownChart
  *
  * @author Isaac-Pruett
  * @version 2026.02.03
