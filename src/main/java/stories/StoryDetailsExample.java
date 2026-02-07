@@ -11,9 +11,9 @@ import dao.Story;
 import javax.swing.*;
 import java.awt.*;
 
-public class StoryDetailsPanel extends JPanel {
+public class StoryDetailsExample extends JPanel {
 
-    public StoryDetailsPanel(Story story) {
+    public StoryDetailsExample(Story story) {
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();

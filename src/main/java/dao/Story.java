@@ -12,7 +12,7 @@ public class Story {
     private final String title;
     private final String description;
     private final int points;
-    private final String status;
+    private String status;
     private final int priority;
 
     private final int ID;
@@ -46,6 +46,8 @@ public class Story {
     public String getStatus() {
         return status;
     }
+
+    public void setStatus(String s) { status = s; }
 
     public int getPriority() {
         return priority;
