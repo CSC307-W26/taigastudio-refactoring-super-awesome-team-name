@@ -14,12 +14,10 @@ import java.util.Collection;
  * @version 1.1
  */
 public class ListProjectHomePanel extends JPanel {
-	
-	private Collection<Project> projects;
+
 
 	public ListProjectHomePanel(JFrame main) {
-		this.projects = Blackboard.getInstance().getAllProjects();
-		System.out.println(this.projects);
+		Collection<Project> projects = Blackboard.getInstance().getAllProjects();
 		this.setLayout(new BorderLayout());
 		JPanel projectRows = new JPanel();
 		projectRows.setLayout(new BoxLayout(projectRows, BoxLayout.Y_AXIS));
