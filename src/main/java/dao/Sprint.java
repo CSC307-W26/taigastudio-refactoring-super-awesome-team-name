@@ -15,16 +15,18 @@ public class Sprint {
 	private Date expiration;
 	private Date beginning;
 	
-	public Sprint (PriorityQueue<UserStory> s, Map<UserStory, String> d, Date exp) {
+	public Sprint (PriorityQueue<UserStory> s, Map<UserStory, String> d, Date b, Date exp) {
 		stories = s;
 		designations = d;
+		beginning=b;
 		expiration = exp;
 	}
 	
-	public Sprint(Date exp) {
+	public Sprint(Date b, Date exp) {
 		stories = new PriorityQueue<UserStory>();
 		designations = new HashMap<>() {
 		};
+		beginning=b;
 		expiration = exp;
 	}
 	

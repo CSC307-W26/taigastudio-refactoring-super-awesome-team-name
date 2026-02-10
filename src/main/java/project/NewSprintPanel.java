@@ -56,8 +56,13 @@ public class NewSprintPanel extends JFrame {
         String sprintName=name.getText();
         String start=startDate.getText();
         String end=endDate.getText();
-        Date startDate=formatter.parse(start);
-        Date endDate=formatter.parse(end);
-        Blackboard.getInstance().setActiveSprintSprint(new Sprint(startDate, endDate));
+        try{
+            Date startDate=formatter.parse(start);
+            Date endDate=formatter.parse(end);
+            Blackboard.getInstance().setActiveSprint(new Sprint(startDate, endDate));
+        } catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Likely entered incorrect date format try MM/dd/yy");
+        }
     }
 }
