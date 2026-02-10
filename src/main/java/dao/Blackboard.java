@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Blackboard {
 
-    private static Blackboard blackboard;
+    private static Blackboard instance;
     private final Map<String, Project> projects;
     private final Map<String, UserStory> userStories;
     private final Map<String, Task> tasks;
@@ -22,7 +22,7 @@ public class Blackboard {
 
     public String curEditTaskID = "0";
 
-    public Blackboard() {
+    private Blackboard() {
         this.projects = new ConcurrentHashMap<>();
         this.userStories = new ConcurrentHashMap<>();
         this.tasks = new ConcurrentHashMap<>();
@@ -89,10 +89,10 @@ public class Blackboard {
     }
 
     public static Blackboard getInstance() {
-        if (blackboard == null) {
-            blackboard = new Blackboard();
+        if (instance == null) {
+            instance = new Blackboard();
         }
-        return blackboard;
+        return instance;
     }
 
     public static void addStory(String story) {

@@ -54,7 +54,12 @@ public class BurndownChart extends JPanel {
 		for (UserStory s : blackboard.getAllUserStories()) {
 			pts += s.getPoints();
 		}
-		this.maxPoints = pts;
+		if (pts > 0) {
+			this.maxPoints = pts;
+		}
+		else {
+			this.maxPoints = 1;
+		}
 
 
 		Point origin = new Point(this.leftPadding, this.topPadding);
