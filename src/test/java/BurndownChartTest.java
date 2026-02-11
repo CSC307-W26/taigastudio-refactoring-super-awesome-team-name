@@ -31,7 +31,7 @@ public class BurndownChartTest extends JFrame {
 		blackboard.addTask(new Task("task7", "blank", "blank"));
 
 
-		UserStory st = new UserStory("aaa", "mystory", "desc");
+		UserStory st = new UserStory("mystory", "desc");
 		st.setPoints(8);
 
 		st.setTasks(blackboard.getAllTasks().stream().toList());

@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This class represents a user story
@@ -18,8 +19,8 @@ public class UserStory {
 
     private List<Task> tasks;
 
-    public UserStory(String id, String title, String description) {
-        this.id = id;
+    public UserStory(String title, String description) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
     }

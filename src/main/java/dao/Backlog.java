@@ -14,20 +14,20 @@ import java.util.List;
  */
 
 public class Backlog {
-    private final List<Story> stories = new ArrayList<>();
+    private final List<UserStory> stories = new ArrayList<>();
 
-    public void addStory(Story story) { stories.add(story); }
-    public void delStory(Story story) { stories.remove(story); }
+    public void addStory(UserStory story) { stories.add(story); }
+    public void deleteStory(UserStory story) { stories.remove(story); }
 
-    public List<Story> getStories() { return stories; }
+    public List<UserStory> getStories() { return stories; }
 
-    public Story get(int index){ return stories.get(index); }
-    public int indexOf(Story story){ return stories.indexOf(story); }
+    public UserStory get(int index){ return stories.get(index); }
+    public int indexOf(UserStory story){ return stories.indexOf(story); }
     public int size() {
         return stories.size();
     }
 
-    public void moveStory(Story story, int newIndex) {
+    public void moveStory(UserStory story, int newIndex) {
         int oldIndex = stories.indexOf(story);
         if (oldIndex == -1) return;
 
