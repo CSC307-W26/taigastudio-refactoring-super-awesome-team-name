@@ -1,5 +1,8 @@
 package dao;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -92,8 +95,10 @@ public class Sprint {
 		return new Date().after(expiration);
 	}
 	
-	public int daysRemaining() {
-		return 0;
+	public long daysRemaining() {
+		LocalDate now=LocalDate.now();
+		LocalDate expDate=expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return ChronoUnit.DAYS.between(now, expDate);
 	}
 	
 	public void extend(Date newExp) {
