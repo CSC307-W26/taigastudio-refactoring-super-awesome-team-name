@@ -13,12 +13,14 @@ public class Project {
     private String description;
     private String id;
     private Backlog backlog;
+    private Sprint activeSprint;
    
     public Project(String id, String title, String description){
         this.id = id;
         this.title = title;
         this.description = description;
         this.backlog = new Backlog();
+        this.activeSprint = null;
     }
 
     public String getDescription(){
@@ -51,5 +53,13 @@ public class Project {
 
     public void setBacklog(Backlog backlog) {
         this.backlog = backlog;
+    }
+
+    public Sprint getActiveSprint(){
+        return activeSprint;
+    }
+
+    public void setActiveSprint(Sprint activeSprint){
+        this.activeSprint = activeSprint;
     }
 }
