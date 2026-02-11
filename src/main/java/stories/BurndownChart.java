@@ -13,7 +13,7 @@ import java.util.List;
  * Burndown Chart Panel for TaigaStudio Application
  *
  * @author Isaac-Pruett
- * @version 2026.02.03
+ * @version 2026.02.11
  */
 public class BurndownChart extends JPanel {
 	

@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Central shared data model for the TaigaStudio application.
  * FEEL FREE TO MODIFY AS YOU NEED
  *
- * @version 2026.02.03
+ * @version 2026.02.11
  * @author Isaac-Pruett
  */
 public class Blackboard {
