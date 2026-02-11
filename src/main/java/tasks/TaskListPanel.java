@@ -41,7 +41,6 @@ public class TaskListPanel extends JPanel {
 		}
 
 		JButton create = new JButton("Create");
-		// create.setActionCommand(String.valueOf(i));
 		create.addActionListener(e -> nanny.OpenCreateTaskPanel(e, story));
 		add(create);
 	}
