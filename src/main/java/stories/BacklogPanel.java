@@ -28,16 +28,37 @@ public class BacklogPanel extends JPanel {
         JPanel backlogHeader = new JPanel(new BorderLayout());
         backlogHeader.add(new JLabel("Backlog"), "West");
         add(backlogHeader, BorderLayout.NORTH);
-        JButton newStoryBtn = new JButton("+ USER STORY");
-        newStoryBtn.addActionListener(new NewStoryListener(this, backlog));
+        JButton newStoryBtn = getNewStoryBtn(backlog);
         backlogHeader.add(newStoryBtn, "East");
 
         listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 
-
         add(listPanel, BorderLayout.CENTER);
-        refresh();
+    }
+
+    private JButton getNewStoryBtn(Backlog backlog) {
+        JButton newStoryBtn = new JButton("+ USER STORY");
+        newStoryBtn.addActionListener(e -> {
+            NewStoryNanny nanny = new NewStoryNanny();
+            JFrame f = new JFrame("New Story");
+            f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+            Runnable onSuccess = () -> {
+                refresh();
+                f.dispose();
+            };
+            Runnable onCancel = f::dispose;
+
+            NewStoryPanel panel = new NewStoryPanel();
+            NewStoryController.connect(panel, nanny, backlog, onSuccess, onCancel);
+
+            f.setContentPane(panel);
+            f.setSize(800, 800);
+            f.setLocationRelativeTo(null);
+            f.setVisible(true);
+        });
+        return newStoryBtn;
     }
 
     public void refresh() {
