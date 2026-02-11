@@ -14,9 +14,10 @@ public class Blackboard {
 
     private static Blackboard instance;
     private Project activeProject;
+    private final Map<String, Project> projects;
 
     private Blackboard() {
-
+        this.projects = new ConcurrentHashMap<>();
     }
 
     public static Blackboard getInstance() {
@@ -29,10 +30,17 @@ public class Blackboard {
     public void setActiveProject(Project p){
         this.activeProject = p;
     }
-
     public Project getActiveProject(){
-        return  this.activeProject;
+        return this.activeProject;
     }
-
+    public Collection<Project> getAllProjects(){
+        return this.projects.values();
+    }
+    public void addProject(Project p){
+        this.projects.put(p.getId(), p);
+    }
+    public void deleteProject(Project p){
+        this.projects.remove(p.getId());
+    }
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * This class represents a project
  *
- * @author Owen Sam
+ * @author Owen Sam and Owen Ledrick
  * @version 1.0
  *
  */
