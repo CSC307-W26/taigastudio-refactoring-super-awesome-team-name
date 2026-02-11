@@ -1,11 +1,11 @@
-import dao.Blackboard;
-import dao.Sprint;
-import dao.Task;
-import dao.UserStory;
+import dao.*;
 import stories.BurndownChart;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Test class for stories.BurndownChart
@@ -20,28 +20,44 @@ public class BurndownChartTest extends JFrame {
 	public static void main(String[] a) {
 		BurndownChartTest app = new BurndownChartTest();
 		Blackboard blackboard = Blackboard.getInstance();
-		blackboard.addTask(new Task("task1", "blank", "blank"));
-		blackboard.addTask(new Task("task2", "blank", "blank"));
-		blackboard.addTask(new Task("task3", "blank", "blank"));
+
+
+
+		Date start = new Date();
+		Date end = new Date(start.getTime() + MILLIS_PER_DAY * 14L);
+		Sprint sprint = new Sprint(start, end);
+
+
+
+		UserStory story = new UserStory("mystory", "desc");
+
+		sprint.addStory(story);
+
+		story.setPoints(8);
+		List<Task> tasks = new ArrayList<>();
+		tasks.add(new Task("task1", "blank", "blank"));
+		tasks.add(new Task("task2", "blank", "blank"));
+		tasks.add(new Task("task3", "blank", "blank"));
 		Task task4 = new Task("task4", "blank", "blank");
-		task4.setCompletionDate(new Date(MILLIS_PER_DAY * 4));
-		blackboard.addTask(task4);
-		blackboard.addTask(new Task("task5", "blank", "blank"));
-		blackboard.addTask(new Task("task6", "blank", "blank"));
-		blackboard.addTask(new Task("task7", "blank", "blank"));
+		task4.setCompletionDate(new Date(start.getTime() + MILLIS_PER_DAY * 2L));
+		tasks.add(task4);
+		tasks.add(new Task("task5", "blank", "blank"));
+		tasks.add(new Task("task6", "blank", "blank"));
+		tasks.add(new Task("task7", "blank", "blank"));
+
+		story.setTasks(tasks);
 
 
-		UserStory st = new UserStory("mystory", "desc");
-		st.setPoints(8);
+		Project project = new Project(UUID.randomUUID().toString(), "my cool project", "it does the thing");
+		project.setActiveSprint(sprint);
+		blackboard.setActiveProject(project);
 
-		st.setTasks(blackboard.getAllTasks().stream().toList());
+		Backlog backlog = new Backlog();
+		blackboard.getActiveProject().setBacklog(backlog);
 
-		blackboard.addUserStory(st);
+		blackboard.getActiveProject().getBacklog().getStories().add(story);
 
 
-		Sprint s = new Sprint(new Date(MILLIS_PER_DAY * 14));
-		s.setBeginning(new Date(0));
-		blackboard.setActiveSprint(s);
 		BurndownChart bdc = new BurndownChart();
 		app.setTitle("Taiga");
 		app.setSize(1470, 600);
