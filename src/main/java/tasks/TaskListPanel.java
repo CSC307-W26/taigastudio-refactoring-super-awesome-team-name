@@ -2,8 +2,6 @@ package tasks;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -11,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dao.Blackboard;
 import dao.Task;
+import dao.UserStory;
 
 /**
  * Panel that displays a list of tasks with edit buttons.
@@ -22,11 +20,8 @@ import dao.Task;
  */
 public class TaskListPanel extends JPanel {
 	
-	public TaskListPanel(JFrame main, TaskNanny nanny) {
-		Blackboard blackboard = Blackboard.getInstance();
-		Collection<Task> taskCollection = blackboard.getAllTasks();
-		List<Task> tasks = new ArrayList<>(taskCollection);
-		
+	public TaskListPanel(JFrame main, TaskNanny nanny, UserStory story) {
+		List<Task> tasks = story.getTasks();		
 		
 		setLayout(new GridLayout(tasks.size()+1, 2));
 		
@@ -37,8 +32,8 @@ public class TaskListPanel extends JPanel {
 			taskText.setEditable(false);
 			
 			JButton edit = new JButton("Edit");
-			edit.setActionCommand(String.valueOf(i));
-			edit.addActionListener(e -> nanny.OpenEditTaskPanel(e));
+			edit.setActionCommand(t.getId());
+			edit.addActionListener(e -> nanny.OpenEditTaskPanel(e, story));
 			
 			add(taskText, BorderLayout.CENTER);
 			add(edit, BorderLayout.EAST);
@@ -47,7 +42,7 @@ public class TaskListPanel extends JPanel {
 
 		JButton create = new JButton("Create");
 		// create.setActionCommand(String.valueOf(i));
-		create.addActionListener(e -> nanny.OpenCreateTaskPanel(e));
+		create.addActionListener(e -> nanny.OpenCreateTaskPanel(e, story));
 		add(create);
 	}
 	

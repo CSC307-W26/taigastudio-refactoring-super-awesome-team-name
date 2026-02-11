@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,5 +64,12 @@ public class UserStory {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(Task task){
+        if(tasks == null){
+            tasks = new ArrayList<>();
+        }
+        tasks.add(task);
     }
 }

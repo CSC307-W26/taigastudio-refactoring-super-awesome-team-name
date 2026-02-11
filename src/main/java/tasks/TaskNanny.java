@@ -1,11 +1,12 @@
 package tasks;
 
 import java.awt.event.ActionEvent;
+import java.util.UUID;
 
 import javax.swing.JFrame;
 
-import dao.Blackboard;
 import dao.Task;
+import dao.UserStory;
 
 /**
  * This class is the nanny for tasks.EditTaskTest
@@ -21,41 +22,47 @@ public class TaskNanny {
 		this.main = main;
 	}
 	
-	public void SaveTaskButton(Task oldTask, String subject, String body) {
+	public void SaveTaskButton(Task oldTask, String subject, String body, UserStory story) {
 		if(subject.equals("")){
 			return;
 		}
-		Blackboard blackboard = Blackboard.getInstance();
-		blackboard.getTask(oldTask.getId()).setSubject(subject);
-		blackboard.getTask(oldTask.getId()).setBody(body);
-		main.setContentPane(new TaskListPanel(main, this));
+		Task task =  story.getTasks().stream().filter(t -> t.getId().equals(oldTask.getId())).findFirst().orElse(null);
+		task.setSubject(subject);
+		task.setBody(body);
+		main.setContentPane(new TaskListPanel(main, this, story));
 		main.revalidate();
 		main.repaint();
+		for(Task t : story.getTasks()){
+			System.out.println(t);
+		}
 	}
 	
-	public void CreateTaskButton(String subject, String body) {
+	public void CreateTaskButton(String subject, String body, UserStory story) {
 		if(subject.equals("")){
 			return;
 		}
-		Blackboard blackboard = Blackboard.getInstance();
-		blackboard.addTask(new Task(String.valueOf(blackboard.getTaskCount()), subject, body));
-		main.setContentPane(new TaskListPanel(main, this));
+		story.addTask(new Task(UUID.randomUUID().toString(), subject, body));
+		main.setContentPane(new TaskListPanel(main, this, story));
 		main.revalidate();
 		main.repaint();
+
+		for(Task t : story.getTasks()){
+			System.out.println(t);
+		}
 	}
 	
-	
-	public void OpenEditTaskPanel(ActionEvent e) {
+	public void OpenEditTaskPanel(ActionEvent e, UserStory story) {
 		String id = e.getActionCommand();
-		Blackboard blackboard = Blackboard.getInstance();
-		main.setContentPane(new TaskPanel(blackboard.getTask(id), this));
+		Task task =  story.getTasks().stream().filter(t -> t.getId().equals(id)).findFirst().orElse(null);
+		main.setContentPane(new TaskPanel(task, this, story));
 		main.revalidate();
 		main.repaint();
+		
 	}
 
-	public void OpenCreateTaskPanel(ActionEvent e) {
+	public void OpenCreateTaskPanel(ActionEvent e, UserStory story) {
 		
-		main.setContentPane(new TaskPanel(null, this));
+		main.setContentPane(new TaskPanel(null, this, story));
 		main.revalidate();
 		main.repaint();
 	}

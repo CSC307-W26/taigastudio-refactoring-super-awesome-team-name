@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import dao.Task;
+import dao.UserStory;
 
 /**
  * Panel for editing an existing task with input fields for subject and body.
@@ -23,7 +24,7 @@ import dao.Task;
  */
 public class TaskPanel extends JPanel {
 	
-	public TaskPanel(Task task, TaskNanny nanny) {
+	public TaskPanel(Task task, TaskNanny nanny, UserStory story) {
 		boolean isCreate = task == null;
 		String subjectText = "";
 		String bodyText = "";
@@ -52,10 +53,10 @@ public class TaskPanel extends JPanel {
 		
 		JButton saveButton = isCreate ? new JButton("CREATE") : new JButton("SAVE");
 		if(isCreate){
-			saveButton.addActionListener(e -> nanny.CreateTaskButton(subject.getText(), body.getText()));
+			saveButton.addActionListener(e -> nanny.CreateTaskButton(subject.getText(), body.getText(), story));
 		}
 		else{
-			saveButton.addActionListener(e -> nanny.SaveTaskButton(task, subject.getText(), body.getText()));
+			saveButton.addActionListener(e -> nanny.SaveTaskButton(task, subject.getText(), body.getText(), story));
 		}
 		center.setLayout(new BorderLayout(10, 10));
 		center.add(subject, BorderLayout.NORTH);
