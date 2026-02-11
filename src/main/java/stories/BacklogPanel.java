@@ -5,7 +5,7 @@ package stories;
  * displays the backlog structure
  *
  * @author Nick Grant
- * @version 1.0
+ * @version 1.3
  *
  */
 import dao.Backlog;
