@@ -145,5 +145,10 @@ public class Sprint {
 	}
 	
 	public record Designation(String developer, UserStory story) {}
+
+
+	public Collection<UserStory> getStories(){
+        return this.stories;
+	}
 }
 

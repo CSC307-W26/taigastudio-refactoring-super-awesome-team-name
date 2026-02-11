@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +9,7 @@ import java.util.UUID;
  * @author Collin Howard
  * @version 1.0
  */
-public class UserStory {
+public class UserStory implements Comparable<UserStory>{
 
     private String id;
     private String title;
@@ -71,5 +70,11 @@ public class UserStory {
             tasks = new ArrayList<>();
         }
         tasks.add(task);
+    }
+
+
+    @Override
+    public int compareTo(UserStory other) {
+        return Integer.compare(this.getPoints(), other.getPoints());
     }
 }
