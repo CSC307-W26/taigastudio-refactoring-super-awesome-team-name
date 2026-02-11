@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 /**
  * This class represents a project
  *
@@ -13,6 +15,9 @@ public class Project {
     private String description;
     private String id;
     private Backlog backlog;
+
+    private Sprint activeSprint;
+    private List<Sprint> allSprints;
 
    
     public Project(String id, String title, String description){
@@ -54,4 +59,19 @@ public class Project {
     }
 
 
+    public List<Sprint> getAllSprints() {
+        return allSprints;
+    }
+
+    public void setAllSprints(List<Sprint> allSprints) {
+        this.allSprints = allSprints;
+    }
+
+    public Sprint getActiveSprint() {
+        return activeSprint;
+    }
+
+    public void setActiveSprint(Sprint activeSprint) {
+        this.activeSprint = activeSprint;
+    }
 }
