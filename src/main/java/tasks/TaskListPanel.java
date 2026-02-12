@@ -58,15 +58,7 @@ public class TaskListPanel extends JPanel {
 
 	}
 
-	/**
-	 * Method to convert the task into an entry inside the panel
-	 * Includes drag and drop and an edit button made.
-	 * Refreshing would be done by the nanny
-	 * @param t
-	 * @param nanny
-	 * @param story
-	 * @return
-	 */
+	
 	private JPanel createTaskEntry(Task t, TaskNanny nanny, UserStory story) {
         JPanel entry = new JPanel(new BorderLayout());
         entry.setBorder(BorderFactory.createEtchedBorder());
@@ -87,7 +79,6 @@ public class TaskListPanel extends JPanel {
 
         entry.setTransferHandler(new TaskTransferHandler());
         
-        // Start drag when mouse is pressed on the handle
         drag.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 JComponent comp = (JComponent) e.getComponent();
@@ -98,12 +89,6 @@ public class TaskListPanel extends JPanel {
         return entry;
     }
 
-	/**
-	 * Code that acts as a helper method to do new drag and drop from an icon
-	 * Structure on using transferHandler and anything similar came from video: 
-	 * https://youtu.be/I19_Yv2AsJM?si=t9KmnA-8j-vxqZoG
-	 * 
-	 */
     private class TaskTransferHandler extends TransferHandler {
         @Override
         public int getSourceActions(JComponent component) {
@@ -119,8 +104,7 @@ public class TaskListPanel extends JPanel {
         public boolean canImport(TransferSupport support) {
             return true;
         }
-
-		//import data will be what's allowing things to be dragged and dropped
+		
         @Override
         public boolean importData(TransferSupport support) {
             Component src = support.getComponent();
