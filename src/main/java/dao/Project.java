@@ -1,5 +1,6 @@
 package dao;
-
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class Project {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.backlog = new Backlog();
     }
 
     public String getDescription(){
@@ -68,6 +70,13 @@ public class Project {
     }
 
     public Sprint getActiveSprint() {
+        if (activeSprint == null){
+            Calendar c = Calendar.getInstance();
+            Date dt = new Date();
+            c.setTime(dt);
+            c.add(Calendar.DATE, 14);
+            return new Sprint(dt, c.getTime());
+        }
         return activeSprint;
     }
 

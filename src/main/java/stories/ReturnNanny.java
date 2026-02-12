@@ -7,6 +7,8 @@ package stories;
  * @version 1.0
  */
 
+import dao.Backlog;
+import dao.Blackboard;
 import project.ListProjectHomePanel;
 
 import javax.swing.*;
@@ -20,6 +22,7 @@ public class ReturnNanny {
 
         public void returnHome(JFrame main){
             ListProjectHomePanel hp = new ListProjectHomePanel(main);
+            Blackboard.getInstance().setActiveProject(null);
             main.setContentPane(hp);
             main.revalidate();
             main.repaint();

@@ -15,15 +15,20 @@ public class UserStory implements Comparable<UserStory>{
     private String id;
     private String title;
     private String description;
+    private String status;
+    private final int priority;
 
     private int points;
 
     private List<Task> tasks;
 
-    public UserStory(String title, String description) {
+    public UserStory(String title, String description, int points, String status, int priority) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
+        this.points = points;
+        this.status = status;
+        this.priority = priority;
     }
 
     public String getId() {
@@ -66,6 +71,10 @@ public class UserStory implements Comparable<UserStory>{
         this.tasks = tasks;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     public void addTask(Task task){
         if(tasks == null){
             tasks = new ArrayList<>();
@@ -77,5 +86,13 @@ public class UserStory implements Comparable<UserStory>{
     @Override
     public int compareTo(UserStory other) {
         return Integer.compare(this.getPoints(), other.getPoints());
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String selectedItem) {
+        this.status = selectedItem;
     }
 }

@@ -19,7 +19,11 @@ public class BacklogView extends JPanel {
 
     public BacklogView(Backlog backlog, SwitchWindow windowSwitcher) {
         setLayout(new BorderLayout());
-
+        if (Blackboard.getInstance().getActiveProject().getActiveSprint() != null) {
+            chart = new BurndownChart();
+        }else{
+            chart = null;
+        }
         // Fixed header
         JPanel scrumHeaderWrapper = new JPanel(new BorderLayout());
         scrumHeaderWrapper.add(new JLabel("Scrum"), BorderLayout.WEST);
@@ -52,22 +56,22 @@ public class BacklogView extends JPanel {
 
     //test burndown chart
     public void BurndownChartTest() {
-        final long MILLIS_PER_DAY = 86400000;
-        Blackboard blackboard = Blackboard.getInstance();
-        blackboard.addTask(new Task("task1", "blank", "blank"));
-        blackboard.addTask(new Task("task2", "blank", "blank"));
-        blackboard.addTask(new Task("task3", "blank", "blank"));
-        Task task4 = new Task("task4", "blank", "blank");
-        task4.setCompletionDate(new Date(MILLIS_PER_DAY * 4));
-        blackboard.addTask(task4);
-        blackboard.addTask(new Task("task5", "blank", "blank"));
-        blackboard.addTask(new Task("task6", "blank", "blank"));
-        blackboard.addTask(new Task("task7", "blank", "blank"));
-        Sprint s = new Sprint(new Date(MILLIS_PER_DAY * 14));
-        s.setBeginning(new Date(0));
-        blackboard.setActiveSprint(s);
-        chart = new BurndownChart();
-        chart.repaint();
+//        final long MILLIS_PER_DAY = 86400000;
+//        Blackboard blackboard = Blackboard.getInstance();
+//        blackboard.addTask(new Task("task1", "blank", "blank"));
+//        blackboard.addTask(new Task("task2", "blank", "blank"));
+//        blackboard.addTask(new Task("task3", "blank", "blank"));
+//        Task task4 = new Task("task4", "blank", "blank");
+//        task4.setCompletionDate(new Date(MILLIS_PER_DAY * 4));
+//        blackboard.addTask(task4);
+//        blackboard.addTask(new Task("task5", "blank", "blank"));
+//        blackboard.addTask(new Task("task6", "blank", "blank"));
+//        blackboard.addTask(new Task("task7", "blank", "blank"));
+//        Sprint s = new Sprint(new Date(MILLIS_PER_DAY * 14));
+//        s.setBeginning(new Date(0));
+//        blackboard.setActiveSprint(s);
+//        chart = new BurndownChart();
+//        chart.repaint();
     }
 }
 

@@ -8,6 +8,7 @@ package stories;
  */
 
 import dao.Backlog;
+import dao.Blackboard;
 import dao.Project;
 import project.EditProjectPanelNanny;
 
@@ -20,9 +21,9 @@ public class ScrumScreen extends JPanel implements SwitchWindow{
     private JPanel window;
     private JFrame main;
 
-    public ScrumScreen(JFrame main, Backlog backlog) {
+    public ScrumScreen(JFrame main) {
         this.main = main;
-        this.backlog = backlog;
+        this.backlog = Blackboard.getInstance().getActiveProject().getBacklog();
         this.window = new BacklogView(this.backlog, this::changeWindow);
 
         setLayout(new BorderLayout());

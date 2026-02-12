@@ -26,6 +26,9 @@ public class Backlog {
     public int size() {
         return stories.size();
     }
+    public void delStory(UserStory s){
+        stories.remove(s);
+    }
 
     public void moveStory(UserStory story, int newIndex) {
         int oldIndex = stories.indexOf(story);

@@ -29,7 +29,7 @@ public class BurndownChartTest extends JFrame {
 
 
 
-		UserStory story = new UserStory("mystory", "desc");
+		UserStory story = new UserStory("mystory", "desc", 1, "status", 1);
 
 		sprint.addStory(story);
 

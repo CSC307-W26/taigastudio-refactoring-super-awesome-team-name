@@ -6,18 +6,18 @@ package stories;
  * @author Nick Grant
  * @version 1.4
  */
-import dao.Story;
+import dao.UserStory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class StoryRow extends JPanel {
-    private final Story story;
+    private final UserStory story;
     private final BacklogPanel backlogPanel;
     private final SwitchWindow windowSwitcher;
 
-    public StoryRow(BacklogPanel backlogPanel, Story story,
+    public StoryRow(BacklogPanel backlogPanel, UserStory story,
                     SwitchWindow windowSwitcher, StoryReorderHandler handler) {
         this.story = story;
         this.backlogPanel = backlogPanel;
@@ -27,7 +27,7 @@ public class StoryRow extends JPanel {
         setPreferredSize(new Dimension(0, 60));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
-        JLabel ID = new JLabel("#" + story.getID());
+        JLabel ID = new JLabel("#" + story.getId());
         ID.setForeground(new Color(37, 168, 157));
         ID.setBounds(10, 25, 20, 20);
         add(ID);
@@ -87,7 +87,7 @@ public class StoryRow extends JPanel {
         JPopupMenu menu = new JPopupMenu();
 
         JMenuItem edit = new JMenuItem("Edit");
-        edit.addActionListener(_ -> windowSwitcher.changeWindow((story)));
+//        edit.addActionListener(_ -> windowSwitcher.changeWindow((story)));
         menu.add(edit);
 
         JMenuItem delete = new JMenuItem("Delete");
@@ -100,5 +100,5 @@ public class StoryRow extends JPanel {
         return menu;
     }
 
-    public Story getStory() {return story;}
+    public UserStory getStory() {return story;}
 }

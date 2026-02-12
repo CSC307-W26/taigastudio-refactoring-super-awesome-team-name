@@ -50,6 +50,7 @@ public class BurndownChart extends JPanel {
 		Blackboard blackboard = Blackboard.getInstance();
 
 		int pts = 0;
+		System.out.println(blackboard.getActiveProject().getBacklog());
 		for (UserStory s : blackboard.getActiveProject().getBacklog().getStories()) {
 			if (this.currentSprint.containsStory(s)){
 				pts += s.getPoints();

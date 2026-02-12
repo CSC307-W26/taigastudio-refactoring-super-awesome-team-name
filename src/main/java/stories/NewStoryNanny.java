@@ -1,6 +1,7 @@
 package stories;
 
 import dao.Story;
+import dao.UserStory;
 
 /**
  * Validates input and creates a Story (does NOT change backlog directly).
@@ -31,26 +32,26 @@ class NewStoryNanny {
             return Result.fail("Priority must be 1–5.");
         }
 
-        Story s = new Story(t, d, points, "New", priority);
+        UserStory s = new UserStory(t, d, points, "New", priority);
         return Result.ok("Story saved successfully!", s);
     }
 
     public static class Result {
         private final boolean ok;
         private final String message;
-        private final Story story;
+        private final UserStory story;
 
-        private Result(boolean ok, String message, Story story) {
+        private Result(boolean ok, String message, UserStory story) {
             this.ok = ok;
             this.message = message;
             this.story = story;
         }
 
-        public static Result ok(String m, Story s) { return new Result(true, m, s); }
+        public static Result ok(String m, UserStory s) { return new Result(true, m, s); }
         public static Result fail(String m) { return new Result(false, m, null); }
 
         public boolean isOk() { return ok; }
         public String getMessage() { return message; }
-        public Story getStory() { return story; }
+        public UserStory getStory() { return story; }
     }
 }
