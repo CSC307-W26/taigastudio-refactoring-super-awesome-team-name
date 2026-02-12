@@ -51,7 +51,7 @@ public class BacklogPanel extends JPanel {
             Runnable onCancel = f::dispose;
 
             NewStoryPanel panel = new NewStoryPanel();
-
+            new NewStoryListener(panel, nanny, backlog, onSuccess, onCancel);
             f.setContentPane(panel);
             f.setSize(800, 800);
             f.setLocationRelativeTo(null);
