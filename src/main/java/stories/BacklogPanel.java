@@ -9,7 +9,7 @@ package stories;
  *
  */
 import dao.Backlog;
-import dao.Story;
+import dao.UserStory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,7 +65,7 @@ public class BacklogPanel extends JPanel {
         listPanel.removeAll();
         StoryReorderHandler handler = new StoryReorderHandler(backlog, this);
         listPanel.setTransferHandler(handler);
-        for (Story s : backlog.getStories()) {
+        for (UserStory s : backlog.getStories()) {
             StoryRow row = new StoryRow(this, s, windowSwitcher, handler);
             listPanel.add(row);
         }
@@ -96,6 +96,6 @@ public class BacklogPanel extends JPanel {
         return new Dimension(800, listPanel.getPreferredSize().height + 50);
     }
 
-    public void delStory(Story s){ backlog.delStory(s); }
+    public void deleteStory(UserStory s){ backlog.deleteStory(s); }
 
 }

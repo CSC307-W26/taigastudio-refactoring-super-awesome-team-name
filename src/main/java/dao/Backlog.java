@@ -15,8 +15,13 @@ import java.util.List;
 
 public class Backlog {
     private final List<UserStory> stories = new ArrayList<>();
+    private int countStories = 0;
 
-    public void addStory(UserStory story) { stories.add(story); }
+
+    public void addStory(UserStory story) {
+        stories.add(story);
+        story.setBacklogID(++countStories);
+    }
     public void deleteStory(UserStory story) { stories.remove(story); }
 
     public List<UserStory> getStories() { return stories; }

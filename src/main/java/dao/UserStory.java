@@ -10,20 +10,22 @@ import java.util.UUID;
  * @author Collin Howard
  * @version 1.0
  */
-public class UserStory implements Comparable<UserStory>{
 
+public class UserStory implements Comparable<UserStory>{
     private String id;
     private String title;
     private String description;
-
+    private String status;
     private int points;
-
     private List<Task> tasks;
+    private int backlogID;
 
-    public UserStory(String title, String description) {
+    public UserStory(String title, String description, String status, int points) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
+        this.status = status;
+        this.points = points;
     }
 
     public String getId() {
@@ -73,6 +75,13 @@ public class UserStory implements Comparable<UserStory>{
         tasks.add(task);
     }
 
+    public String getStatus(){ return status; }
+
+    public void setStatus(String status){ this.status = status; }
+
+    public void setBacklogID(int id) { backlogID = id; }
+
+    public int getBacklogID() { return backlogID; }
 
     @Override
     public int compareTo(UserStory other) {

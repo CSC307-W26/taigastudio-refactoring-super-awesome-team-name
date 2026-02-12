@@ -16,7 +16,7 @@ import javax.swing.*;
 
 public class ScrumScreen extends JPanel implements SwitchWindow{
 
-    private final Backlog backlog;
+    private Backlog backlog;
     private JPanel window;
     private JFrame main;
 

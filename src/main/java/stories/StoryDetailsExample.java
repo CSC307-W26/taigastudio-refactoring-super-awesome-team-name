@@ -6,20 +6,20 @@ package stories; /**
  * @author Nick Grant
  * @version 1.0 - draft
  */
-import dao.Story;
+import dao.UserStory;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class StoryDetailsExample extends JPanel {
 
-    public StoryDetailsExample(Story story) {
+    public StoryDetailsExample(UserStory story) {
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        panel.add(new JLabel("ID: " + story.getID()));
+        panel.add(new JLabel("ID: " + story.getBacklogID()));
         panel.add(new JLabel("Subject: " + story.getTitle()));
         panel.add(new JLabel("Points: " + story.getPoints()));
 

@@ -8,7 +8,7 @@ package stories; /**
  *
  */
 import dao.Backlog;
-import dao.Story;
+import dao.UserStory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +59,7 @@ public class StoryReorderHandler extends TransferHandler {
     @Override
     public boolean importData(TransferSupport support) {
         try {
-            Story dragged = (Story) support.getTransferable()
+            UserStory dragged = (UserStory) support.getTransferable()
                     .getTransferData(BacklogStoryTransferable.STORY_FLAVOR);
 
             DropLocation dl = support.getDropLocation();
@@ -71,7 +71,7 @@ public class StoryReorderHandler extends TransferHandler {
 
             int dropIndex = panel.getDropIndex(dropPoint);
 
-            java.util.List<Story> stories = backlog.getStories();
+            java.util.List<UserStory> stories = backlog.getStories();
             int originalIndex = stories.indexOf(dragged);
 
             if (originalIndex == -1) return false;
