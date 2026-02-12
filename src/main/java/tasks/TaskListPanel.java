@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.TransferHandler;
+import javax.swing.border.Border;
 
 import dao.Task;
 import dao.UserStory;
@@ -52,7 +53,8 @@ public class TaskListPanel extends JPanel {
 
 		JButton create = new JButton("Create");
 		create.addActionListener(e -> nanny.OpenCreateTaskPanel(e, story));
-		add(create);
+		add(taskPanel, BorderLayout.CENTER);
+        add(create, BorderLayout.SOUTH);
 
 	}
 
