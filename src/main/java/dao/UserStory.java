@@ -1,7 +1,7 @@
 package dao;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -10,17 +10,29 @@ import java.util.UUID;
  * @author Collin Howard
  * @version 1.0
  */
-public class UserStory implements Comparable<UserStory>{
+public class UserStory {
 
     private String id;
     private String title;
     private String description;
-    private String status;
-    private final int priority;
-
     private int points;
+    private String status;
+    private int priority;
+    private int backlogID;
 
     private List<Task> tasks;
+
+    public UserStory(String title, String description) {
+        this.id = UUID.randomUUID().toString();
+        this.title = title;
+        this.description = description;
+
+        this.points = 0;
+        this.status = "New";
+        this.priority = 0;
+
+        this.tasks = new ArrayList<>();
+    }
 
     public UserStory(String title, String description, int points, String status, int priority) {
         this.id = UUID.randomUUID().toString();
@@ -29,6 +41,8 @@ public class UserStory implements Comparable<UserStory>{
         this.points = points;
         this.status = status;
         this.priority = priority;
+
+        this.tasks = new ArrayList<>();
     }
 
     public String getId() {
@@ -71,8 +85,28 @@ public class UserStory implements Comparable<UserStory>{
         this.tasks = tasks;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public int getPriority() {
         return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getBacklogID() {
+        return backlogID;
+    }
+
+    public void setBacklogID(int backlogID) {
+        this.backlogID = backlogID;
     }
 
     public void addTask(Task task){
@@ -82,17 +116,9 @@ public class UserStory implements Comparable<UserStory>{
         tasks.add(task);
     }
 
-
     @Override
-    public int compareTo(UserStory other) {
-        return Integer.compare(this.getPoints(), other.getPoints());
+    public String toString() {
+        return "P" + priority + " | " + title + " (" + points + ") [" + status + "]";
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String selectedItem) {
-        this.status = selectedItem;
-    }
 }

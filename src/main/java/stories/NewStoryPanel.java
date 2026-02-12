@@ -78,7 +78,7 @@ public class NewStoryPanel extends JPanel {
         addToGrid(this, createButton, gbc, 0, 5, 2, 1, GridBagConstraints.HORIZONTAL, 1, 0);
     }
 
-    private static GridBagConstraints baseGbc() {
+    private GridBagConstraints baseGbc() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(6,6,6,6);
         gbc.anchor = GridBagConstraints.WEST;
@@ -86,7 +86,7 @@ public class NewStoryPanel extends JPanel {
         return gbc;
     }
 
-    private static void addToGrid(JPanel parent, JComponent c, GridBagConstraints gbc,
+    private void addToGrid(JPanel parent, JComponent c, GridBagConstraints gbc,
                                   int x, int y, int w, int h,
                                   int fill, double wx, double wy) {
         gbc.gridx = x;

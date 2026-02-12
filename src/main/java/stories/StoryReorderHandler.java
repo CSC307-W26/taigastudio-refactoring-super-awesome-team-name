@@ -8,7 +8,6 @@ package stories; /**
  *
  */
 import dao.Backlog;
-import dao.Story;
 import dao.UserStory;
 
 import javax.swing.*;
@@ -66,7 +65,6 @@ public class StoryReorderHandler extends TransferHandler {
             DropLocation dl = support.getDropLocation();
             Point dropPoint = dl.getDropPoint();
 
-            // convert to listPanel coordinates
             SwingUtilities.convertPointToScreen(dropPoint, support.getComponent());
             SwingUtilities.convertPointFromScreen(dropPoint, panel.getListPanel());
 
@@ -77,7 +75,6 @@ public class StoryReorderHandler extends TransferHandler {
 
             if (originalIndex == -1) return false;
 
-            // adjust when dragging downward
             if (dropIndex > originalIndex) dropIndex--;
 
             if (dropIndex == originalIndex) return false;

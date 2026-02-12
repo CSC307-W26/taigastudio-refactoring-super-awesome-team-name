@@ -17,7 +17,7 @@ import dao.Task;
 import dao.UserStory;
 
 /**
- * Panel for editing an existing task with input fields for subject and body.
+ * Panel for creating a new task or editing an existing task with input fields for subject and body.
  *
  * @author Alexander Bloomer, Collin Howard
  * @version 1.0

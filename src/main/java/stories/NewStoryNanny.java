@@ -1,6 +1,5 @@
 package stories;
 
-import dao.Story;
 import dao.UserStory;
 
 /**
@@ -9,49 +8,29 @@ import dao.UserStory;
  * @author Jonathan Garcia
  * @version 3.0
  */
-public
-class NewStoryNanny {
+public class NewStoryNanny {
 
-    public Result createStory(String title, String desc, int points, int priority) {
+    public NewStoryResult createStory(String title, String desc, int points, int priority) {
         String t = (title == null) ? "" : title.trim();
         String d = (desc == null) ? "" : desc.trim();
 
         if (t.isEmpty() || t.equals(NewStoryPanel.SUBJECT_PLACEHOLDER)) {
-            return Result.fail("Title is required.");
+            return new NewStoryResult(false, "Title is required.", null);
         }
 
         if (d.isEmpty() || d.equals(NewStoryPanel.DESCRIPTION_PLACEHOLDER)) {
-            return Result.fail("Description is required.");
+            return new NewStoryResult(false, "Description is required.", null);
         }
 
         if (points <= 0) {
-            return Result.fail("Points must be a positive integer.");
+            return new NewStoryResult(false, "Points must be a positive integer.", null);
         }
 
         if (priority < 1 || priority > 5) {
-            return Result.fail("Priority must be 1–5.");
+            return new NewStoryResult(false, "Priority must be 1–5.", null);
         }
 
         UserStory s = new UserStory(t, d, points, "New", priority);
-        return Result.ok("Story saved successfully!", s);
-    }
-
-    public static class Result {
-        private final boolean ok;
-        private final String message;
-        private final UserStory story;
-
-        private Result(boolean ok, String message, UserStory story) {
-            this.ok = ok;
-            this.message = message;
-            this.story = story;
-        }
-
-        public static Result ok(String m, UserStory s) { return new Result(true, m, s); }
-        public static Result fail(String m) { return new Result(false, m, null); }
-
-        public boolean isOk() { return ok; }
-        public String getMessage() { return message; }
-        public UserStory getStory() { return story; }
+        return new NewStoryResult(true, "Story saved successfully!", s);
     }
 }

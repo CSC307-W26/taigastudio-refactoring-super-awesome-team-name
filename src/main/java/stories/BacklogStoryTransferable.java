@@ -1,8 +1,6 @@
 package stories;
 
-import dao.Story;
 import dao.UserStory;
-
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.*;
@@ -19,7 +17,7 @@ import java.awt.datatransfer.*;
 public class BacklogStoryTransferable implements Transferable {
 
 	public static final DataFlavor STORY_FLAVOR =
-			new DataFlavor(Story.class, "Story");
+			new DataFlavor(UserStory.class, "Story");
 
 	private static final DataFlavor[] SUPPORTED_FLAVORS = { STORY_FLAVOR };
 

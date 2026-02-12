@@ -7,6 +7,7 @@ package stories;
  * @version 1.4
  */
 import dao.UserStory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -27,9 +28,9 @@ public class StoryRow extends JPanel {
         setPreferredSize(new Dimension(0, 60));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
-        JLabel ID = new JLabel("#" + story.getId());
+        JLabel ID = new JLabel("#" + story.getBacklogID());
         ID.setForeground(new Color(37, 168, 157));
-        ID.setBounds(10, 25, 20, 20);
+        ID.setBounds(10, 25, 30, 20);
         add(ID);
 
         JLabel subject = new JLabel(story.getTitle());
@@ -37,7 +38,7 @@ public class StoryRow extends JPanel {
         add(subject);
 
         JLabel points = new JLabel("Points: " + story.getPoints());
-
+        points.setBounds(600, 20, 100, 20);
 
         JButton details = new JButton("Details");
         details.setBounds(10, 5, 80, 15);
@@ -50,7 +51,7 @@ public class StoryRow extends JPanel {
                 "New", "Ready", "In Progress", "Ready to Test", "Done", "Archived"
         });
         statusBtn.setSelectedItem(story.getStatus());
-        statusBtn.addActionListener(_ -> {
+        statusBtn.addActionListener(e -> {
             story.setStatus((String) statusBtn.getSelectedItem());
         });
         statusBtn.setFocusable(false);
@@ -70,8 +71,8 @@ public class StoryRow extends JPanel {
             public void componentResized(ComponentEvent e) {
                 int w = backlogPanel.getWidth();
                 menuBtn.setBounds(w - 60, 10, 30, 30);
-                points.setBounds(w-130, 20, 50, 20);
-                statusBtn.setBounds(w-270, 18, 110, 30);
+                points.setBounds(w - 130, 20, 100, 20);
+                statusBtn.setBounds(w - 270, 18, 110, 30);
             }
         });
         add(menuBtn);
@@ -87,12 +88,12 @@ public class StoryRow extends JPanel {
         JPopupMenu menu = new JPopupMenu();
 
         JMenuItem edit = new JMenuItem("Edit");
-//        edit.addActionListener(_ -> windowSwitcher.changeWindow((story)));
+        edit.addActionListener(e -> windowSwitcher.changeWindow(new StoryDetailsExample(story)));
         menu.add(edit);
 
         JMenuItem delete = new JMenuItem("Delete");
-        delete.addActionListener(_ -> {
-            backlogPanel.delStory(story);
+        delete.addActionListener(e -> {
+            backlogPanel.deleteStory(story);
             backlogPanel.refresh();
         });
         menu.add(delete);
@@ -100,5 +101,5 @@ public class StoryRow extends JPanel {
         return menu;
     }
 
-    public UserStory getStory() {return story;}
+    public UserStory getStory() { return story; }
 }

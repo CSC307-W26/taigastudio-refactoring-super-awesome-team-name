@@ -51,7 +51,6 @@ public class BacklogPanel extends JPanel {
             Runnable onCancel = f::dispose;
 
             NewStoryPanel panel = new NewStoryPanel();
-            NewStoryController.connect(panel, nanny, backlog, onSuccess, onCancel);
 
             f.setContentPane(panel);
             f.setSize(800, 800);
@@ -96,6 +95,6 @@ public class BacklogPanel extends JPanel {
         return new Dimension(800, listPanel.getPreferredSize().height + 50);
     }
 
-    public void delStory(UserStory s){ backlog.delStory(s); }
+    public void deleteStory(UserStory s){ backlog.deleteStory(s); }
 
 }

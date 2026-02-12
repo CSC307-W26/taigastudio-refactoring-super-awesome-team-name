@@ -13,7 +13,7 @@ import dao.Task;
 import dao.UserStory;
 
 /**
- * Panel that displays a list of tasks with edit buttons.
+ * Panel that displays a list of tasks with edit buttons and a create button for new tasks
  *
  * @author Alexander Bloomer, Collin Howard
  * @version 1.0
