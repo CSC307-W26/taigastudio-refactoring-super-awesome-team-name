@@ -1,72 +1,78 @@
 package stories;
 
 import dao.Backlog;
+import dao.UserStory;
 
 import javax.swing.*;
 
 /**
- * Controller for NewStoryPanel.
+ * Listener for NewStoryPanel.
  *
  * @author Jonathan Garcia
  * @version 3.0
  */
-public class NewStoryController {
+public class NewStoryListener {
 
-    public static void connect(NewStoryPanel ui,
-                               NewStoryNanny nanny,
-                               Backlog backlog,
-                               Runnable onSuccess,
-                               Runnable onCancel) {
+    private final NewStoryPanel ui;
+    private final NewStoryNanny nanny;
+    private final Backlog backlog;
+    private final Runnable onSuccess;
+    private final Runnable onCancel;
+
+    public NewStoryListener(NewStoryPanel ui,
+                            NewStoryNanny nanny,
+                            Backlog backlog,
+                            Runnable onSuccess,
+                            Runnable onCancel) {
+
+        this.ui = ui;
+        this.nanny = nanny;
+        this.backlog = backlog;
+        this.onSuccess = onSuccess;
+        this.onCancel = onCancel;
+
+        connect();
+    }
+
+    private void connect() {
 
         ui.createButton.addActionListener(e -> {
-            String title = ui.subjectField.getText().trim();
-            String desc = ui.descriptionArea.getText().trim();
-            String pts = ui.storyPointsField.getText().trim();
-            int priority = (Integer) ui.priorityBox.getSelectedItem();
 
-            String err = validate(title, desc, pts);
-            if (err != null) {
-                ui.errorLabel.setText(err);
-                return;
-            }
+            String title = ui.subjectField.getText();
+            String desc = ui.descriptionArea.getText();
+            String pts = ui.storyPointsField.getText();
+
+            Integer priObj = (Integer) ui.priorityBox.getSelectedItem();
+            int priority = (priObj == null) ? 1 : priObj;
 
             int points;
             try {
-                points = Integer.parseInt(pts);
+                points = Integer.parseInt(pts.trim());
             } catch (NumberFormatException ex) {
                 ui.errorLabel.setText("Story Points must be an integer.");
                 return;
             }
 
-            NewStoryNanny.Result r = nanny.createStory(title, desc, points, priority);
+            NewStoryResult r = nanny.createStory(title, desc, points, priority);
             if (!r.isOk()) {
                 ui.errorLabel.setText(r.getMessage());
                 return;
             }
 
-            backlog.addStory(r.getStory());
+            UserStory created = r.getStory();
+            backlog.addStory(created);
+
             ui.errorLabel.setText(" ");
             JOptionPane.showMessageDialog(ui, r.getMessage());
 
-            clear(ui);
+            clear();
             onSuccess.run();
         });
 
         ui.cancelButton.addActionListener(e -> onCancel.run());
     }
 
-    private static String validate(String title, String desc, String pts) {
-        boolean titleBad = title.isEmpty() || title.equals(NewStoryPanel.SUBJECT_PLACEHOLDER);
-        boolean descBad = desc.isEmpty() || desc.equals(NewStoryPanel.DESCRIPTION_PLACEHOLDER);
-
-        if (titleBad && descBad) return "Title and Description are required.";
-        if (titleBad) return "Title is required.";
-        if (descBad) return "Description is required.";
-        if (pts.isEmpty()) return "Story Points are required.";
-        return null;
-    }
-
-    private static void clear(NewStoryPanel ui) {
+    private void clear() {
         ui.subjectField.setText(NewStoryPanel.SUBJECT_PLACEHOLDER);
         ui.descriptionArea.setText(NewStoryPanel.DESCRIPTION_PLACEHOLDER);
         ui.storyPointsField.setText("");
