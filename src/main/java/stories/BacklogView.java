@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class BacklogView extends JPanel {
     private BurndownChart chart;
-
+    private BacklogPanel backlogPanel;
 
     public BacklogView(Backlog backlog, SwitchWindow windowSwitcher) {
         setLayout(new BorderLayout());
@@ -29,9 +29,6 @@ public class BacklogView extends JPanel {
         scrumHeaderWrapper.add(new JLabel("Scrum"), BorderLayout.WEST);
         add(scrumHeaderWrapper, BorderLayout.NORTH);
 
-        // Chart
-        BurndownChartTest();
-
         JPanel chartPanel = new JPanel(new BorderLayout());
         chartPanel.add(chart, BorderLayout.CENTER);
         // keep the same size
@@ -40,7 +37,7 @@ public class BacklogView extends JPanel {
         chartPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
 
         // Backlog
-        BacklogPanel backlogPanel = new BacklogPanel(backlog, windowSwitcher);
+        backlogPanel = new BacklogPanel(backlog, windowSwitcher);
 
         // Scrollable content
         JPanel content = new JPanel();
@@ -54,24 +51,9 @@ public class BacklogView extends JPanel {
         add(scroll, BorderLayout.CENTER);
     }
 
-    //test burndown chart
-    public void BurndownChartTest() {
-//        final long MILLIS_PER_DAY = 86400000;
-//        Blackboard blackboard = Blackboard.getInstance();
-//        blackboard.addTask(new Task("task1", "blank", "blank"));
-//        blackboard.addTask(new Task("task2", "blank", "blank"));
-//        blackboard.addTask(new Task("task3", "blank", "blank"));
-//        Task task4 = new Task("task4", "blank", "blank");
-//        task4.setCompletionDate(new Date(MILLIS_PER_DAY * 4));
-//        blackboard.addTask(task4);
-//        blackboard.addTask(new Task("task5", "blank", "blank"));
-//        blackboard.addTask(new Task("task6", "blank", "blank"));
-//        blackboard.addTask(new Task("task7", "blank", "blank"));
-//        Sprint s = new Sprint(new Date(MILLIS_PER_DAY * 14));
-//        s.setBeginning(new Date(0));
-//        blackboard.setActiveSprint(s);
-//        chart = new BurndownChart();
-//        chart.repaint();
-    }
+    public BacklogPanel getBacklogPanel() { return backlogPanel; }
+
+    //FOR BACKLOGTEST
+    public void setBurndownChart(BurndownChart bdc){ chart = bdc; repaint(); }
 }
 
