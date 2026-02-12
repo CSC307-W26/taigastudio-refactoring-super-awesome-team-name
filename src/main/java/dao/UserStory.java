@@ -19,6 +19,7 @@ public class UserStory {
     private int points;
     private String status;
     private int priority;
+    private int backlogID;
 
     private List<Task> tasks;
 
@@ -95,6 +96,9 @@ public class UserStory {
         }
         tasks.add(task);
     }
+
+    public int getBacklogID() { return backlogID; }
+    public void setBacklogID(int id) { backlogID = id; }
 
     @Override
     public String toString() {
