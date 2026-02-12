@@ -37,6 +37,8 @@ public class BacklogListener implements ActionListener {
 
         NewStoryPanel panel = new NewStoryPanel();
 
+        new NewStoryListener(panel, nanny, backlog, onSuccess, onCancel);
+
         f.setContentPane(panel);
         f.setSize(800, 800);
         f.setLocationRelativeTo(null);
