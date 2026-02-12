@@ -52,5 +52,9 @@ public class ScrumScreen extends JPanel implements SwitchWindow{
         revalidate();
         repaint();
     }
+
+    //FOR BACKLOG TEST
+    public BacklogView getWindow(){ return (BacklogView) window; }
+
 }
 
