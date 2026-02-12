@@ -1,5 +1,8 @@
 package dao;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -15,16 +18,18 @@ public class Sprint {
 	private Date expiration;
 	private Date beginning;
 	
-	public Sprint (PriorityQueue<UserStory> s, Map<UserStory, String> d, Date exp) {
+	public Sprint (PriorityQueue<UserStory> s, Map<UserStory, String> d, Date b, Date exp) {
 		stories = s;
 		designations = d;
+		beginning=b;
 		expiration = exp;
 	}
 	
-	public Sprint(Date exp) {
+	public Sprint(Date b, Date exp) {
 		stories = new PriorityQueue<UserStory>();
 		designations = new HashMap<>() {
 		};
+		beginning=b;
 		expiration = exp;
 	}
 	
@@ -90,8 +95,10 @@ public class Sprint {
 		return new Date().after(expiration);
 	}
 	
-	public int daysRemaining() {
-		return 0;
+	public long daysRemaining() {
+		LocalDate now=LocalDate.now();
+		LocalDate expDate=expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return ChronoUnit.DAYS.between(now, expDate);
 	}
 	
 	public void extend(Date newExp) {
@@ -138,5 +145,10 @@ public class Sprint {
 	}
 	
 	public record Designation(String developer, UserStory story) {}
+
+
+	public Collection<UserStory> getStories(){
+        return this.stories;
+	}
 }
 

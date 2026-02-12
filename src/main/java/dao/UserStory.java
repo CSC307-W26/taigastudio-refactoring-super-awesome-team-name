@@ -1,6 +1,8 @@
 package dao;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * This class represents a user story
@@ -8,7 +10,7 @@ import java.util.List;
  * @author Collin Howard
  * @version 1.0
  */
-public class UserStory {
+public class UserStory implements Comparable<UserStory>{
 
     private String id;
     private String title;
@@ -18,8 +20,8 @@ public class UserStory {
 
     private List<Task> tasks;
 
-    public UserStory(String id, String title, String description) {
-        this.id = id;
+    public UserStory(String title, String description) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
     }
@@ -62,5 +64,18 @@ public class UserStory {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(Task task){
+        if(tasks == null){
+            tasks = new ArrayList<>();
+        }
+        tasks.add(task);
+    }
+
+
+    @Override
+    public int compareTo(UserStory other) {
+        return Integer.compare(this.getPoints(), other.getPoints());
     }
 }

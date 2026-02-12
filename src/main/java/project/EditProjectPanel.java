@@ -30,29 +30,29 @@ public class EditProjectPanel extends JPanel {
 		center.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 		
 		//title
-		JPanel field1 = new JPanel();
-		field1.setLayout(new BoxLayout(field1, BoxLayout.Y_AXIS));
-		JLabel label1 = new JLabel("Project Name");
+		JPanel titlePanel = new JPanel();
+		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+		JLabel titleLabel = new JLabel("Project Name");
 		JTextField title = new JTextField(20);
 		title.setText(project.getTitle());
-		label1.setHorizontalAlignment(SwingConstants.LEFT);
+		titleLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		title.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
-		field1.add(label1);
-		field1.add(title);
+		titlePanel.add(titleLabel);
+		titlePanel.add(title);
 		
 		//description
-		JPanel field2 = new JPanel();
-		field2.setLayout(new BoxLayout(field2, BoxLayout.Y_AXIS));
-		JLabel label2 = new JLabel("Description");
+		JPanel descriptionPanel = new JPanel();
+		descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.Y_AXIS));
+		JLabel descriptionLabel = new JLabel("Description");
 		JTextField description = new JTextField(20);
 		description.setText(project.getDescription());
 		description.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
-		label2.setHorizontalAlignment(SwingConstants.LEFT);
-		field2.add(label2);
-		field2.add(description);
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		descriptionPanel.add(descriptionLabel);
+		descriptionPanel.add(description);
 		
-		center.add(field1);
-		center.add(field2);
+		center.add(titlePanel);
+		center.add(descriptionPanel);
 		this.add(center, BorderLayout.CENTER);
 		
 		JPanel buttonPanel = new JPanel();

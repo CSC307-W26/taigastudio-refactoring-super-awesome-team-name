@@ -5,6 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.UUID;
 
+/**
+ * This class is used to test edit project functionality
+ *
+ * @author Owen Sam
+ * @version 1.0
+ *
+ */
 public class EditProjectTest extends JFrame {
 
 

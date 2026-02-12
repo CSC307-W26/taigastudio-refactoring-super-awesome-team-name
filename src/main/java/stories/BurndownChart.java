@@ -1,12 +1,11 @@
 package stories;
 
-import dao.Blackboard;
-import dao.Sprint;
-import dao.Task;
-import dao.UserStory;
+import dao.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * Burndown Chart Panel for TaigaStudio Application
  *
  * @author Isaac-Pruett
- * @version 2026.02.03
+ * @version 2026.02.11
  */
 public class BurndownChart extends JPanel {
 	
@@ -32,12 +31,12 @@ public class BurndownChart extends JPanel {
 		Blackboard blackboard = Blackboard.getInstance();
 
 		int pts = 0;
-		for (UserStory s : blackboard.getAllUserStories()) {
+		for (UserStory s : blackboard.getActiveProject().getActiveSprint().getStories()) {
 			pts += s.getPoints();
 		}
 		this.maxPoints = pts;
 
-		this.currentSprint = blackboard.getActiveSprint();
+		this.currentSprint = blackboard.getActiveProject().getActiveSprint();
 		long end = currentSprint.getExpiration().getTime();
 		long start = currentSprint.getBeginning().getTime();
 		this.sprintLengthDays = (int) ((end - start) / MILLIS_PER_DAY);
@@ -51,8 +50,11 @@ public class BurndownChart extends JPanel {
 		Blackboard blackboard = Blackboard.getInstance();
 
 		int pts = 0;
-		for (UserStory s : blackboard.getAllUserStories()) {
-			pts += s.getPoints();
+		for (UserStory s : blackboard.getActiveProject().getBacklog().getStories()) {
+			if (this.currentSprint.containsStory(s)){
+				pts += s.getPoints();
+			}
+
 		}
 		if (pts > 0) {
 			this.maxPoints = pts;
@@ -64,44 +66,56 @@ public class BurndownChart extends JPanel {
 
 		Point origin = new Point(this.leftPadding, this.topPadding);
 		Dimension dims = this.getSize();
-		this.currentSprint = blackboard.getActiveSprint();
-		List<dao.Task> allTasks = blackboard.getAllTasks().stream().toList();
+		this.currentSprint = blackboard.getActiveProject().getActiveSprint();
+
+
 		this.drawAxes(g);
 		this.drawProjectedLine(origin, g);
 		g.setColor(Color.GREEN);
-		this.drawCompletionLine(g, allTasks);
+		this.drawCompletionLine(g);
 	}
-	
-	private void drawCompletionLine(Graphics g, List<Task> allTasks) {
+
+	private void drawCompletionLine(Graphics g) {
 		Dimension dims = this.getSize();
 		int graphWidth = dims.width - this.rightPadding;
 		int graphHeight = dims.height - this.bottomPadding;
 		int intervalWidth = (graphWidth - leftPadding) / this.sprintLengthDays;
 		int intervalHeight = (graphHeight - topPadding) / this.maxPoints;
+
+		Blackboard b = Blackboard.getInstance();
+		List<UserStory> stories = b.getActiveProject().getActiveSprint().getStories().stream().toList();
+
+		int currentPoints = maxPoints;
+		int priorPoints = maxPoints;
+
 		for (int i = 0; i < this.sprintLengthDays; i++) {
-			int priorCompletedTasks = 0;
-			int tasksCompletedToday = 0;
-			for (Task task : allTasks) {
-				Date today = new Date(this.currentSprint.getBeginning().getTime() + (i) * MILLIS_PER_DAY);
-				Date dayBefore = new Date(this.currentSprint.getBeginning().getTime() + (i - 1) * MILLIS_PER_DAY);
-				try {
-					if (task.getCompletionDate().before(today)) {
-						priorCompletedTasks++;
-						if (task.getCompletionDate().after(dayBefore) || task.getCompletionDate().compareTo(dayBefore) == 0) {
-							tasksCompletedToday++;
+			for (UserStory s : stories) {
+				List<Task> tasks = s.getTasks();
+				for (Task task : tasks) {
+					Date dayBefore = new Date(this.currentSprint.getBeginning().getTime() + (i - 1) * MILLIS_PER_DAY);
+					Date today = new Date(this.currentSprint.getBeginning().getTime() + (i) * MILLIS_PER_DAY);
+					try {
+						if (task.getCompletionDate().before(today)) {
+							if (task.getCompletionDate().after(dayBefore) || task.getCompletionDate().compareTo(dayBefore) == 0) {
+								currentPoints -= (s.getPoints() / s.getTasks().size());
+							}
 						}
+					} catch (NullPointerException e) {
+						// do nothing, the task is not completed.
 					}
-				} catch (NullPointerException e) {
-					// do nothing, the task is not completed.
 				}
 			}
+
 			int x = leftPadding + (i * intervalWidth);
-			int y = topPadding + (intervalHeight * (priorCompletedTasks - tasksCompletedToday));
+			int y = topPadding + (intervalHeight * (maxPoints-priorPoints));
 			int x2 = x + intervalWidth;
-			int y2 = topPadding + (intervalHeight * (priorCompletedTasks));
-			
+			int y2 = topPadding + (intervalHeight * (maxPoints - currentPoints));
+
 			g.drawLine(x, y, x2, y2);
 			g.drawOval(x - (POINT_SIZE / 2), y - (POINT_SIZE / 2), POINT_SIZE, POINT_SIZE);
+
+
+			priorPoints = currentPoints;
 		}
 	}
 	
