@@ -1,6 +1,5 @@
 import dao.*;
 import project.*;
-import stories.Backlog;
 
 import javax.swing.*;
 import java.awt.*;
