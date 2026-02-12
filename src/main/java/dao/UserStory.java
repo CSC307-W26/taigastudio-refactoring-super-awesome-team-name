@@ -15,13 +15,24 @@ public class UserStory {
     private String id;
     private String title;
     private String description;
-
     private int points;
     private String status;
     private int priority;
     private int backlogID;
 
     private List<Task> tasks;
+
+    public UserStory(String title, String description) {
+        this.id = UUID.randomUUID().toString();
+        this.title = title;
+        this.description = description;
+
+        this.points = 0;
+        this.status = "New";
+        this.priority = 0;
+
+        this.tasks = new ArrayList<>();
+    }
 
     public UserStory(String title, String description, int points, String status, int priority) {
         this.id = UUID.randomUUID().toString();
@@ -90,6 +101,14 @@ public class UserStory {
         this.priority = priority;
     }
 
+    public int getBacklogID() {
+        return backlogID;
+    }
+
+    public void setBacklogID(int backlogID) {
+        this.backlogID = backlogID;
+    }
+
     public void addTask(Task task){
         if(tasks == null){
             tasks = new ArrayList<>();
@@ -97,11 +116,9 @@ public class UserStory {
         tasks.add(task);
     }
 
-    public int getBacklogID() { return backlogID; }
-    public void setBacklogID(int id) { backlogID = id; }
-
     @Override
     public String toString() {
         return "P" + priority + " | " + title + " (" + points + ") [" + status + "]";
     }
+
 }
