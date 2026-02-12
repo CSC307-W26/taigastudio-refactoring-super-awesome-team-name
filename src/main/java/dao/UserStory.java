@@ -22,18 +22,6 @@ public class UserStory {
 
     private List<Task> tasks;
 
-    public UserStory(String title, String description) {
-        this.id = UUID.randomUUID().toString();
-        this.title = title;
-        this.description = description;
-
-        this.points = 0;
-        this.status = "New";
-        this.priority = 0;
-
-        this.tasks = new ArrayList<>();
-    }
-
     public UserStory(String title, String description, int points, String status, int priority) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
