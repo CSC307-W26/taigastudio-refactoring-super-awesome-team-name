@@ -8,7 +8,7 @@ import tasks.TaskListPanel;
 import tasks.TaskNanny;
 
 /**
- * Test Application for Editing Tasks
+ * Test Application for Creating and Editing Tasks
  *
  * @author Alexander Bloomer, Collin Howard
  * @version 1.0

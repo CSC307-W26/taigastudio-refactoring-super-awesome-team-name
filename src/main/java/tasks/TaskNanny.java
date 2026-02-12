@@ -9,7 +9,7 @@ import dao.Task;
 import dao.UserStory;
 
 /**
- * This class is the nanny for tasks.EditTaskTest
+ * This class is the nanny for creating and editing tasks
  *
  * @author Alexander Bloomer, Collin Howard
  * @version 1.0
