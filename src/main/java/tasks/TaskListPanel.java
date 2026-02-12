@@ -83,7 +83,6 @@ public class TaskListPanel extends JPanel {
         entry.add(taskText, BorderLayout.CENTER);
         entry.add(edit, BorderLayout.EAST);
 
-        // --- Drag and Drop Logic ---
         entry.setTransferHandler(new TaskTransferHandler());
         
         // Start drag when mouse is pressed on the handle
@@ -114,10 +113,10 @@ public class TaskListPanel extends JPanel {
             return new StringSelection("");
         }
 
-        // @Override
-        // public boolean canImport(TransferSupport support) {
-        //     return true;
-        // }
+        @Override
+        public boolean canImport(TransferSupport support) {
+            return true;
+        }
 
 		//import data will be what's allowing things to be dragged and dropped
         @Override
