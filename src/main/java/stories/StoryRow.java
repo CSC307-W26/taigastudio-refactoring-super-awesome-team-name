@@ -88,7 +88,7 @@ public class StoryRow extends JPanel {
         JPopupMenu menu = new JPopupMenu();
 
         JMenuItem edit = new JMenuItem("Edit");
-        edit.addActionListener(e -> windowSwitcher.changeWindow(new StoryDetailsExample(story)));
+        edit.addActionListener(e -> windowSwitcher.changeWindow(new EditStoryPanel(story, backlogPanel, windowSwitcher)));
         menu.add(edit);
 
         JMenuItem delete = new JMenuItem("Delete");
