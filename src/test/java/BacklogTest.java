@@ -27,7 +27,7 @@ public class BacklogTest extends JFrame {
     static void main(String[] a) {
         BacklogTest app = new BacklogTest();
 
-        ScrumScreen scrumScreen = new ScrumScreen(app, backlog);
+        ScrumScreen scrumScreen = new ScrumScreen(app);
         BurndownChartTest();
         BacklogView backlogView = scrumScreen.getWindow();
         backlogView.setBurndownChart(bdc);

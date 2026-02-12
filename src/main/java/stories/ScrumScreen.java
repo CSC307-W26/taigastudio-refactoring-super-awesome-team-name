@@ -54,6 +54,7 @@ public class ScrumScreen extends JPanel implements SwitchWindow{
     }
 
     //FOR BACKLOG TEST
+    public void setBacklog(Backlog b) { backlog = b; }
     public BacklogView getWindow(){ return (BacklogView) window; }
 
 }
